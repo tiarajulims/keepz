@@ -18,4 +18,4 @@ def get_auth_token():
     res = requests.post(url=send_sms, data=payload, headers=headers)
     print(res.content)
 
-get_auth_token()
+
