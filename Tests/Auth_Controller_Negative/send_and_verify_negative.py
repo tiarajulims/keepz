@@ -1,18 +1,19 @@
 import json
-
 import pytest
 import requests
 import unittest
 import Utils.api_endpoints
 
 
+
 class AuthControllerNegative(unittest.TestCase):
 
-    def test_01_empty_phone(self):
-        headers = {
+    headers = {
             'content-type': 'application/json',
             'Accept': '*/*'
         }
+
+    def test_01_empty_phone(self):
 
         payload = {
             "countryCode": "995",
@@ -21,17 +22,13 @@ class AuthControllerNegative(unittest.TestCase):
             "smsType": "LOGIN_AS_BUSINESS"
         }
 
-        response = requests.post(url=Utils.api_endpoints.send_sms, data=json.dumps(payload), headers=headers)
+        response = requests.post(url=Utils.api_endpoints.send_sms, data=json.dumps(payload), headers=AuthControllerNegative.headers)
         json_data = response.json()
         assert response.status_code == 400
         assert "message" in json_data
         assert json_data["message"] == "[Invalid format of phone, must not be blank]" or "[must not be blank, Invalid format of phone]"
 
     def test_02_string_phone(self):
-        headers = {
-            'content-type': 'application/json',
-            'Accept': '*/*'
-        }
 
         payload = {
             "countryCode": "995",
@@ -40,17 +37,13 @@ class AuthControllerNegative(unittest.TestCase):
             "smsType": "LOGIN_AS_BUSINESS"
         }
 
-        response = requests.post(url=Utils.api_endpoints.send_sms, data=json.dumps(payload), headers=headers)
+        response = requests.post(url=Utils.api_endpoints.send_sms, data=json.dumps(payload), headers=AuthControllerNegative.headers)
         json_data = response.json()
         assert response.status_code == 400
         assert "message" in json_data
         assert json_data["message"] == "[Invalid format of phone]"
         #
     def test_03_invalid_phone(self):
-        headers = {
-            'content-type': 'application/json',
-            'Accept': '*/*'
-        }
 
         payload = {
             "countryCode": "995",
@@ -59,7 +52,7 @@ class AuthControllerNegative(unittest.TestCase):
             "smsType": "LOGIN_AS_BUSINESS"
         }
 
-        response = requests.post(url=Utils.api_endpoints.send_sms, data=json.dumps(payload), headers=headers)
+        response = requests.post(url=Utils.api_endpoints.send_sms, data=json.dumps(payload), headers=AuthControllerNegative.headers)
         json_data = response.json()
         assert response.status_code == 404
         assert "message" in json_data
@@ -68,10 +61,6 @@ class AuthControllerNegative(unittest.TestCase):
 
 
     def test_04_empty_smsType(self):
-        headers = {
-            'content-type': 'application/json',
-            'Accept': '*/*'
-        }
 
         payload = {
             "countryCode": "995",
@@ -80,7 +69,7 @@ class AuthControllerNegative(unittest.TestCase):
             "smsType": ""
         }
 
-        response = requests.post(url=Utils.api_endpoints.send_sms, data=json.dumps(payload), headers=headers)
+        response = requests.post(url=Utils.api_endpoints.send_sms, data=json.dumps(payload), headers=AuthControllerNegative.headers)
         json_data = response.json()
         assert response.status_code == 400
         assert "message" in json_data
@@ -89,10 +78,6 @@ class AuthControllerNegative(unittest.TestCase):
 
 
     def test_05_invalid_business_number(self):
-        headers = {
-            'content-type': 'application/json',
-            'Accept': '*/*'
-        }
 
         payload = {
             "countryCode": "995",
@@ -101,18 +86,16 @@ class AuthControllerNegative(unittest.TestCase):
             "smsType": "LOGIN_AS_BUSINESS"
         }
 
-        response = requests.post(url=Utils.api_endpoints.send_sms, data=json.dumps(payload), headers=headers)
+        response = requests.post(url=Utils.api_endpoints.send_sms, data=json.dumps(payload), headers=AuthControllerNegative.headers)
         json_data = response.json()
         assert response.status_code == 404
         assert "message" in json_data
         assert json_data["message"] == '404 NOT_FOUND "Business user does not exist for mobile number: 9955999899811"'
 
-    @pytest.mark.parametrize("username", "password", ("jije", "paroli"), )
+
+
+    @pytest.mark.parametrize("invalidCode", [("899230"), ("899231"), ("899232")], )
     def test_06_invalid_sms_code(self):
-        headers = {
-            'content-type': 'application/json',
-            'Accept': '*/*'
-        }
 
         payload = {
             "code": "899230",
@@ -120,7 +103,7 @@ class AuthControllerNegative(unittest.TestCase):
             "phone": "599989981"
         }
 
-        response = requests.post(url=Utils.api_endpoints.verify_sms, data=json.dumps(payload), headers=headers)
+        response = requests.post(url=Utils.api_endpoints.verify_sms, data=json.dumps(payload), headers=AuthControllerNegative.headers)
         json_data = response.json()
         assert response.status_code == 428
         assert "message" in json_data
@@ -129,19 +112,29 @@ class AuthControllerNegative(unittest.TestCase):
 
 
     def test_07_incorrect_phone(self):
-        headers = {
-            'content-type': 'application/json',
-            'Accept': '*/*'
-        }
 
         payload = {
             "code": "899230",
             "countryCode": "995",
             "phone": "59998998121231"
         }
-
-        response = requests.post(url=Utils.api_endpoints.verify_sms, data=json.dumps(payload), headers=headers)
+        response = requests.post(url=Utils.api_endpoints.verify_sms, data=json.dumps(payload), headers=AuthControllerNegative.headers)
         json_data = response.json()
         assert response.status_code == 428
         assert "message" in json_data
         assert json_data["message"] == '428 PRECONDITION_REQUIRED "SMS not send on phone 99559998998121231 "'
+
+
+    def test_06_invalid_sms_code(self, ):
+        payload = {
+            "code": "422102",
+            "countryCode": "995",
+            "phone": "599989981"
+        }
+        response = requests.post(url=Utils.api_endpoints.verify_sms, data=json.dumps(payload),
+                                 headers=AuthControllerNegative.headers)
+        json_data = response.json()
+
+        assert response.status_code == 428
+        assert "message" in json_data
+        assert json_data["message"] == '428 PRECONDITION_REQUIRED "SMS not send on phone 995599989981 "'

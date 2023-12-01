@@ -7,7 +7,7 @@ import requests
 import unittest
 
 import Utils.api_endpoints
-from Utils import get_token
+from Utils import commonSteps
 
 
 class AuthController(unittest.TestCase):
@@ -49,7 +49,6 @@ class AuthController(unittest.TestCase):
             "countryCode": "996",
             "phone": "599989981"
         }
-        requests.post()
         response = requests.post(url=Utils.api_endpoints.verify_sms, data= json.dumps(payload), headers=headers)
         print(response.text)
         assert response.status_code == 202 or 200
