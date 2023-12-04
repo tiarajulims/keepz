@@ -436,7 +436,7 @@ class AuthControllerNegative(unittest.TestCase):
     @allure.title("login with wrong number")
     @allure.description("Login as individual leaving the number field empty , with correct otp and country code 996 ")
     @allure.severity(allure.severity_level.NORMAL)
-    def test_23_login_wrong_phone_individual(self):
+    def test_26_login_wrong_phone_individual(self):
         Utils.commonSteps.send_sms("996",
                                    "string",
                                    "599989981",
@@ -450,14 +450,14 @@ class AuthControllerNegative(unittest.TestCase):
         self.assertIn(sendSms["message"], '428 PRECONDITION_REQUIRED "SMS not send on phone 996499989981 "')
 
     @allure.suite(verify_sms_login_individual)
-    @allure.title("login with empty number")
-    @allure.description("Login as individual leaving the number field empty , with correct otp and country code 996 ")
+    @allure.title("login with wrong number")
+    @allure.description("Login as business leaving the number field empty , with correct otp and country code 996 ")
     @allure.severity(allure.severity_level.NORMAL)
-    def test_23_login_wrong_phone_individual(self):
+    def test_27_login_wrong_phone_business(self):
         Utils.commonSteps.send_sms("996",
                                    "string",
                                    "599989981",
-                                   Utils.Data_Object.auth_data.individual)
+                                   Utils.Data_Object.auth_data.business)
         response = Utils.commonSteps.verify_otp_sms("123456",
                                                     "996",
                                                     "499989981")
@@ -466,43 +466,26 @@ class AuthControllerNegative(unittest.TestCase):
         self.assertIn("message", sendSms)
         self.assertIn(sendSms["message"], '428 PRECONDITION_REQUIRED "SMS not send on phone 996499989981 "')
 
-    def test0001_123(self):
-        response = Utils.commonSteps.send_sms("996",
-                                              "string",
-                                              "599989981",
-                                              Utils.Data_Object.auth_data.individual)
-        response1 = Utils.commonSteps.verify_otp_sms("654321",
-                                                     "996",
-                                                     "499989981", )
-        print(response1.text)
+    @allure.suite(verify_sms_registration)
+    @allure.title("Registration with wrong number")
+    @allure.description("register with wrong number, with correct otp and country code 996 ")
+    @allure.severity(allure.severity_level.NORMAL)
+    def test_28_register_wrong_phone_(self):
+        Utils.commonSteps.send_sms("996",
+                                   "string",
+                                   "599989981",
+                                   Utils.Data_Object.auth_data.registration)
+        response = Utils.commonSteps.verify_otp_sms("123456",
+                                                    "996",
+                                                    "499989981")
+        sendSms = response.json()
+        self.assertEquals(response.status_code, 428)
+        self.assertIn("message", sendSms)
+        self.assertIn(sendSms["message"], '428 PRECONDITION_REQUIRED "SMS not send on phone 996499989981 "')
 
 
-    # def test_06_invalid_sms_code(self, ):
-    #     payload = {
-    #         "code": "422102",
-    #         "countryCode": "995",
-    #         "phone": "599989981"
-    #     }
-    #     response = requests.post(url=Utils.api_endpoints.verify_sms, data=json.dumps(payload),
-    #                              headers=AuthControllerNegative.headers)
-    #     json_data = response.json()
-    #
-    #     assert response.status_code == 428
-    #     assert "message" in json_data
-    #     assert json_data["message"] == '428 PRECONDITION_REQUIRED "SMS not send on phone 995599989981 "'
-    #
-    # """ Business send_sms Tests """
-    #
-    # """ Send_sms Tests For Registration """
-    #
-    # def test_03_empty_phone_individual_registration(self):
-    #     response = Utils.commonSteps.send_sms("996",
-    #                                           "string",
-    #                                           "",
-    #                                           "REGISTRATION")
-    #     sendSms = response.json()
-    #     self.assertEquals(response.status_code, 400)
-    #     self.assertIn("message", sendSms)
-    #     self.assertIn(sendSms["message"],
-    #                   ["[Invalid format of phone, must not be blank]",
-    #                    "[must not be blank, Invalid format of phone]"])
+
+
+
+
+

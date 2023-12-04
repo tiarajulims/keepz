@@ -91,3 +91,14 @@ class AuthControllerNegative(unittest.TestCase):
         assert "message" in login_response
         assert login_response["message"] == "[mobileName-Is required]"
 
+
+
+    def test0001_123(self):
+        response = Utils.commonSteps.send_sms("996",
+                                              "string",
+                                              "599989981",
+                                              Utils.Data_Object.auth_data.individual)
+        response1 = Utils.commonSteps.verify_otp_sms("654321",
+                                                     "996",
+                                                     "499989981", )
+        print(response1.text)
