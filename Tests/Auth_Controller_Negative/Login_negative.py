@@ -31,6 +31,7 @@ class AuthControllerNegative(unittest.TestCase):
         assert "message" in login_response
         assert login_response["message"] == '404 NOT_FOUND "Sms not send with id testtest "'
 
+
     def test_02_Login_invalid_mobileOS(self):
         Utils.commonSteps.send_sms("996",
                                    "string",
@@ -50,6 +51,7 @@ class AuthControllerNegative(unittest.TestCase):
         assert login_response[
                    "message"] == "invalidMobOS can't be parsed to MobileOS.MobileOS must be one of this: "'IOS, ANDROID, UNKNOWN'
         print(response.text)
+
 
     def test_03_Login_empty_deviceToken(self):
         Utils.commonSteps.send_sms("996",
@@ -71,7 +73,7 @@ class AuthControllerNegative(unittest.TestCase):
         print(response.text)
 
 
-    def test_03_Login_mobileName_empty(self):
+    def test_04_Login_mobileName_empty(self):
         Utils.commonSteps.send_sms("996",
                                    "string",
                                    "599989981",
@@ -89,8 +91,3 @@ class AuthControllerNegative(unittest.TestCase):
         assert "message" in login_response
         assert login_response["message"] == "[mobileName-Is required]"
 
-
-def test_06_test():
-    Utils.commonSteps.get_auth_token("996",
-                                     "599989981",
-                                     "LOGIN_AS_INDIVIDUAL")

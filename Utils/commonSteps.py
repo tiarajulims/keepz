@@ -1,39 +1,11 @@
 import json
 import requests
 from requests import Response
-
+import Utils.Data_Object.auth_data
 import Utils.api_endpoints
 
-headers = {
-    'Accept': '*/*',
-    'Content-Type': 'application/json'
-}
 
-payload_send_sms = {
-    "countryCode": "996",
-    "otphash": "string",
-    "phone": "599989981",
-    "smsType": "LOGIN_AS_INDIVIDUAL"
-}
-
-payload_verify_sms = {
-    "code": "123456",
-    "countryCode": "996",
-    "phone": "599989981"
-}
-
-payload_login = {
-    "deviceToken": "string",
-    "mobileName": "string",
-    "mobileOS": "ANDROID",
-    "userSMSId": "",  # Placeholder, will be updated later
-    "userType": "INDIVIDUAL"
-}
-
-individual = "LOGIN_AS_INDIVIDUAL"
-business = "LOGIN_AS_BUSINESS"
-
-
+# METHOD WHICH SEND ONLY SMS
 def send_sms(countrycode, otphash, phoneNumber, userType):
     payload_Send_sms = {
         "countryCode": countrycode,
@@ -41,19 +13,26 @@ def send_sms(countrycode, otphash, phoneNumber, userType):
         "phone": phoneNumber,
         "smsType": userType
     }
-    requests.post(url=Utils.api_endpoints.send_sms, data=json.dumps(payload_Send_sms), headers=headers)
+    response = requests.post(url=Utils.api_endpoints.send_sms,
+                             data=json.dumps(payload_Send_sms),
+                             headers=Utils.Data_Object.auth_data.headers)
+    return response
 
 
+# METHOD WHICH VERIFIES AN OTP AND RETURNS USER_SMS_ID
 def verify_otp_sms(code, countrycode, phoneNumber):
     payload_Verify_sms = {
         "code": code,
         "countryCode": countrycode,
         "phone": phoneNumber
     }
-    response = requests.post(url=Utils.api_endpoints.verify_sms, data=json.dumps(payload_Verify_sms), headers=headers)
+    response = requests.post(url=Utils.api_endpoints.verify_sms,
+                             data=json.dumps(payload_Verify_sms),
+                             headers=Utils.Data_Object.auth_data.headers)
     return response
 
 
+# METHOD WHICH GENERATES A TOKEN AND RETURNS IT
 def login(devToken, mobName, mobOS, userSmsId, userType):
     payload_Login = {
         "deviceToken": devToken,
@@ -62,19 +41,44 @@ def login(devToken, mobName, mobOS, userSmsId, userType):
         "userSMSId": userSmsId,
         "userType": userType
     }
-    response = requests.post(url=Utils.api_endpoints.login, data=json.dumps(payload_Login), headers=headers)
+    response = requests.post(url=Utils.api_endpoints.login,
+                             data=json.dumps(payload_Login),
+                             headers=Utils.Data_Object.auth_data.headers)
     print(response)
     return response
 
 
-def get_auth_token(countrycode, phoneNumber, userType):
+# METHOD WHICH PERFORMS ALL ACTIONS TO GENERATE AND RETURN TOKEN, SEND SMS, VERIFY AND LOGIN
+def get_auth_token(code, countrycode, otphash, phoneNumber, userType):
     # Send SMS
-    send_sms(countrycode, phoneNumber, userType)
+    send_sms(countrycode, otphash, phoneNumber, userType)
     # Verify SMS
-    userSmsId = verify_otp_sms(countrycode, phoneNumber)
+    userSmsId = verify_otp_sms(code, countrycode, phoneNumber)
     # Update payload_login with userSMSId
-    payload_login["userSMSId"] = userSmsId.text
+    Utils.Data_Object.auth_data.payload_login["userSMSId"] = userSmsId.text
     # Perform login
-    res_login = requests.post(url=Utils.api_endpoints.login, data=json.dumps(payload_login), headers=headers)
+    res_login = requests.post(url=Utils.api_endpoints.login,
+                              data=json.dumps(Utils.Data_Object.auth_data.payload_login),
+                              headers=Utils.Data_Object.auth_data.headers)
     data = json.loads(res_login.text)
-    print(data)
+    return data
+
+
+# METHOD WHICH REGISTERS A NEW ACCOUNT , GENERATES TOKEN AND RETURNS IT, TO USE THESE FIRST SEND SMS AND VERIFY NEEDS TO BE SENT
+def register_account(dob, devToken, iban, mobName, mobOS, name, persId, userSmsId, userType):
+    payload_registration = {
+        "birthDate": dob,
+        "deviceToken": devToken,
+        "iban": iban,
+        "mobileName": mobName,
+        "mobileOS": mobOS,
+        "name": name,
+        "personalNumber": persId,
+        "userSMSId": userSmsId,
+        "userType": userType
+    }
+    response = requests.post(url=Utils.api_endpoints.registration,
+                             data=json.dumps(payload_registration),
+                             headers=Utils.Data_Object.auth_data.headers)
+    data = json.loads(response.text)
+    return data
