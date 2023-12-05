@@ -5,12 +5,7 @@ import Utils.commonSteps
 import Utils.api_endpoints
 
 
-class AuthControllerNegative(unittest.TestCase):
-
-    headers = {
-        'content-type': 'application/json',
-        'Accept': 'application/json'
-    }
+class LoginNegative(unittest.TestCase):
 
     def test_01_Login_invalid_userSmsId_individual(self):
         Utils.commonSteps.send_sms("996",

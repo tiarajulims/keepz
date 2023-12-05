@@ -5,15 +5,15 @@ import unittest
 import allure
 import sys
 import os
-import Utils.api_endpoints
-import Utils.commonSteps
-import Utils.Data_Object.auth_data
+
 
 parent_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 sys.path.insert(0, parent_dir)
+import Utils.commonSteps
+import Utils.commonSteps
+import Utils.Data_Object.auth_data
 
-
-class AuthControllerNegative(unittest.TestCase):
+class SendVerifyNegative(unittest.TestCase):
     headers = {
         'content-type': 'application/json',
         'Accept': '*/*'

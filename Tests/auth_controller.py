@@ -12,7 +12,6 @@ from Utils import commonSteps
 
 class AuthController(unittest.TestCase):
 
-    # @pytest.mark.xfail
     def test_01_check(self):
         payload = {
             'phone': '996599989981'

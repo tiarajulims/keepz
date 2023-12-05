@@ -1,7 +1,7 @@
 
 headers = {
     'Accept': '*/*',
-    'Content-Type': 'application/json'
+    'Content-Type': '*/*'
 }
 
 payload_send_sms = {
