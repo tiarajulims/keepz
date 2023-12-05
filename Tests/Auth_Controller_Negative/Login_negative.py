@@ -27,6 +27,14 @@ class LoginNegative(unittest.TestCase):
         assert login_response["message"] == '404 NOT_FOUND "Sms not send with id testtest "'
 
 
+
+
+
+
+
+
+
+
     def test_02_Login_invalid_mobileOS(self):
         Utils.commonSteps.send_sms("996",
                                    "string",
@@ -92,7 +100,7 @@ class LoginNegative(unittest.TestCase):
         response = Utils.commonSteps.send_sms("996",
                                               "string",
                                               "599989981",
-                                              Utils.Data_Object.auth_data.individual)
+                                              Utils..auth_data.individual)
         response1 = Utils.commonSteps.verify_otp_sms("654321",
                                                      "996",
                                                      "499989981", )
