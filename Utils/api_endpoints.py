@@ -17,3 +17,6 @@ registration = base_url + "/api/v1/auth/registration"
 
 #TODO "upgradeOrDowngrade" end point needs to be added once everything will be clear
 
+
+get_profile = base_url + "/api/v1/profile/details"
+

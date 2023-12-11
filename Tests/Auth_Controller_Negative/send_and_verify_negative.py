@@ -1,23 +1,17 @@
-import json
-import pytest
-import requests
 import unittest
 import allure
 import sys
 import os
-
-
+import Utils.commonSteps
+import Utils.commonSteps
+import Utils.Data_Object.login_data
 parent_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 sys.path.insert(0, parent_dir)
-import Utils.commonSteps
-import Utils.commonSteps
-import Utils.Data_Object.auth_data
+
+
 
 class SendVerifyNegative(unittest.TestCase):
-    headers = {
-        'content-type': 'application/json',
-        'Accept': '*/*'
-    }
+
 
 
     # ALLURE SUITE TITLES FOR SEND SMS
@@ -30,8 +24,6 @@ class SendVerifyNegative(unittest.TestCase):
     verify_sms_login_business = "Login Functionality - Verify Sms -  Business"
     verify_sms_registration = "Registration Functionality - Verify Sms"
 
-
-
     @allure.suite(send_sms_login_individual)
     @allure.title("Login with empty phone")
     @allure.description("Login for individual person with empty phone number and country code 996")
@@ -40,8 +32,10 @@ class SendVerifyNegative(unittest.TestCase):
         response = Utils.commonSteps.send_sms("996",
                                               "string",
                                               "",
-                                              Utils.Data_Object.auth_data.individual)
+                                              Utils.Data_Object.login_data.DataForLogin.individual_send_sms)
+        print(Utils.Data_Object.login_data.DataForLogin.individual_send_sms)
         sendSms = response.json()
+        print(sendSms)
         self.assertEquals(response.status_code, 400)
         self.assertIn("message", sendSms)
         self.assertIn(sendSms["message"],
@@ -56,7 +50,10 @@ class SendVerifyNegative(unittest.TestCase):
         response = Utils.commonSteps.send_sms("996",
                                               "string",
                                               "",
-                                              Utils.Data_Object.auth_data.business)
+                                              Utils.Data_Object
+                                              .login_data
+                                              .DataForLogin
+                                              .business_sens_sms)
         sendSms = response.json()
         self.assertEquals(response.status_code, 400)
         self.assertIn("message", sendSms)
@@ -72,7 +69,7 @@ class SendVerifyNegative(unittest.TestCase):
         response = Utils.commonSteps.send_sms("996",
                                               "string",
                                               "",
-                                              Utils.Data_Object.auth_data.registration)
+                                              Utils.Data_Object.login_data.DataForLogin.registration_send_sms)
         sendSms = response.json()
         self.assertEquals(response.status_code, 400)
         self.assertIn("message", sendSms)
@@ -88,7 +85,7 @@ class SendVerifyNegative(unittest.TestCase):
         response = Utils.commonSteps.send_sms("",
                                               "string",
                                               "599989981",
-                                              Utils.Data_Object.auth_data.individual)
+                                              Utils.Data_Object.login_data.DataForLogin.individual_send_sms)
         sendSms = response.json()
         self.assertEquals(response.status_code, 400)
         self.assertIn("message", sendSms)
@@ -102,7 +99,7 @@ class SendVerifyNegative(unittest.TestCase):
         response = Utils.commonSteps.send_sms("",
                                               "string",
                                               "599989981",
-                                              Utils.Data_Object.auth_data.business)
+                                              Utils.Data_Object.login_data.DataForLogin.business_sens_sms)
         sendSms = response.json()
         self.assertEquals(response.status_code, 400)
         self.assertIn("message", sendSms)
@@ -116,7 +113,7 @@ class SendVerifyNegative(unittest.TestCase):
         response = Utils.commonSteps.send_sms("",
                                               "string",
                                               "599989981",
-                                              Utils.Data_Object.auth_data.registration)
+                                              Utils.Data_Object.login_data.DataForLogin.registration_send_sms)
         sendSms = response.json()
         self.assertEquals(response.status_code, 400)
         self.assertIn("message", sendSms)
@@ -130,7 +127,7 @@ class SendVerifyNegative(unittest.TestCase):
         response = Utils.commonSteps.send_sms("996",
                                               "string",
                                               "string",
-                                              Utils.Data_Object.auth_data.individual)
+                                              Utils.Data_Object.login_data.DataForLogin.individual_send_sms)
         sendSms = response.json()
         self.assertEquals(response.status_code, 400)
         self.assertIn("message", sendSms)
@@ -144,7 +141,7 @@ class SendVerifyNegative(unittest.TestCase):
         response = Utils.commonSteps.send_sms("996",
                                               "string",
                                               "string",
-                                              Utils.Data_Object.auth_data.business)
+                                              Utils.Data_Object.login_data.DataForLogin.business_sens_sms)
         sendSms = response.json()
         self.assertEquals(response.status_code, 400)
         self.assertIn("message", sendSms)
@@ -158,7 +155,7 @@ class SendVerifyNegative(unittest.TestCase):
         response = Utils.commonSteps.send_sms("996",
                                               "string",
                                               "string",
-                                              Utils.Data_Object.auth_data.registration)
+                                              Utils.Data_Object.login_data.DataForLogin.registration_send_sms)
         sendSms = response.json()
         self.assertEquals(response.status_code, 400)
         self.assertIn("message", sendSms)
@@ -172,7 +169,7 @@ class SendVerifyNegative(unittest.TestCase):
         response = Utils.commonSteps.send_sms("996",
                                               "string",
                                               "821989981",
-                                              Utils.Data_Object.auth_data.individual)
+                                              Utils.Data_Object.login_data.DataForLogin.individual_send_sms)
         sendSms = response.json()
         self.assertEquals(response.status_code, 404)
         self.assertIn("message", sendSms)
@@ -187,7 +184,7 @@ class SendVerifyNegative(unittest.TestCase):
         response = Utils.commonSteps.send_sms("996",
                                               "string",
                                               "821989981",
-                                              Utils.Data_Object.auth_data.business)
+                                              Utils.Data_Object.login_data.DataForLogin.business_sens_sms)
         sendSms = response.json()
         self.assertEquals(response.status_code, 404)
         self.assertIn("message", sendSms)
@@ -202,7 +199,7 @@ class SendVerifyNegative(unittest.TestCase):
         response = Utils.commonSteps.send_sms("996",
                                               "string",
                                               "ass821989981",
-                                              Utils.Data_Object.auth_data.registration)
+                                              Utils.Data_Object.login_data.DataForLogin.registration_send_sms)
         sendSms = response.json()
         self.assertEquals(response.status_code, 400)
         self.assertIn("message", sendSms)
@@ -232,7 +229,7 @@ class SendVerifyNegative(unittest.TestCase):
         Utils.commonSteps.send_sms("996",
                                    "string",
                                    "599989981",
-                                   Utils.Data_Object.auth_data.individual)
+                                   Utils.Data_Object.login_data.DataForLogin.individual_send_sms)
         response = Utils.commonSteps.verify_otp_sms("",
                                                     "996",
                                                     "599989981")
@@ -249,7 +246,7 @@ class SendVerifyNegative(unittest.TestCase):
         Utils.commonSteps.send_sms("996",
                                    "string",
                                    "599989981",
-                                   Utils.Data_Object.auth_data.business)
+                                   Utils.Data_Object.login_data.DataForLogin.business_sens_sms)
         response = Utils.commonSteps.verify_otp_sms("",
                                                     "996",
                                                     "599989981")
@@ -266,7 +263,7 @@ class SendVerifyNegative(unittest.TestCase):
         Utils.commonSteps.send_sms("996",
                                    "string",
                                    "599989981",
-                                   Utils.Data_Object.auth_data.registration)
+                                   Utils.Data_Object.login_data.DataForLogin.registration_send_sms)
         response = Utils.commonSteps.verify_otp_sms("",
                                                     "996",
                                                     "599989981")
@@ -283,7 +280,7 @@ class SendVerifyNegative(unittest.TestCase):
         Utils.commonSteps.send_sms("996",
                                    "string",
                                    "599989981",
-                                   Utils.Data_Object.auth_data.individual)
+                                   Utils.Data_Object.login_data.DataForLogin.individual_send_sms)
         response = Utils.commonSteps.verify_otp_sms("654221",
                                                     "996",
                                                     "599989981")
@@ -300,7 +297,7 @@ class SendVerifyNegative(unittest.TestCase):
         Utils.commonSteps.send_sms("996",
                                    "string",
                                    "599989981",
-                                   Utils.Data_Object.auth_data.business)
+                                   Utils.Data_Object.login_data.DataForLogin.business_sens_sms)
         response = Utils.commonSteps.verify_otp_sms("654221",
                                                     "996",
                                                     "599989981")
@@ -317,7 +314,7 @@ class SendVerifyNegative(unittest.TestCase):
         Utils.commonSteps.send_sms("996",
                                    "string",
                                    "599989981",
-                                   Utils.Data_Object.auth_data.registration)
+                                   Utils.Data_Object.login_data.DataForLogin.registration_send_sms)
         response = Utils.commonSteps.verify_otp_sms("654221",
                                                     "996",
                                                     "599989981")
@@ -335,7 +332,7 @@ class SendVerifyNegative(unittest.TestCase):
         Utils.commonSteps.send_sms("996",
                                    "string",
                                    "599989981",
-                                   Utils.Data_Object.auth_data.individual)
+                                   Utils.Data_Object.login_data.DataForLogin.individual_send_sms)
         response = Utils.commonSteps.verify_otp_sms("123456",
                                                     "997",
                                                     "599989981")
@@ -353,7 +350,7 @@ class SendVerifyNegative(unittest.TestCase):
         Utils.commonSteps.send_sms("996",
                                    "string",
                                    "599989981",
-                                   Utils.Data_Object.auth_data.business)
+                                   Utils.Data_Object.login_data.DataForLogin.business_sens_sms)
         response = Utils.commonSteps.verify_otp_sms("123456",
                                                     "997",
                                                     "599989981")
@@ -371,7 +368,7 @@ class SendVerifyNegative(unittest.TestCase):
         Utils.commonSteps.send_sms("996",
                                    "string",
                                    "599989981",
-                                   Utils.Data_Object.auth_data.registration)
+                                   Utils.Data_Object.login_data.DataForLogin.registration_send_sms)
         response = Utils.commonSteps.verify_otp_sms("123456",
                                                     "997",
                                                     "599989981")
@@ -389,7 +386,7 @@ class SendVerifyNegative(unittest.TestCase):
         Utils.commonSteps.send_sms("996",
                                    "string",
                                    "599989981",
-                                   Utils.Data_Object.auth_data.individual)
+                                   Utils.Data_Object.login_data.DataForLogin.individual_send_sms)
         response = Utils.commonSteps.verify_otp_sms("123456",
                                                     "996",
                                                     "")
@@ -406,7 +403,7 @@ class SendVerifyNegative(unittest.TestCase):
         Utils.commonSteps.send_sms("996",
                                    "string",
                                    "599989981",
-                                   Utils.Data_Object.auth_data.business)
+                                   Utils.Data_Object.login_data.DataForLogin.business_sens_sms)
         response = Utils.commonSteps.verify_otp_sms("123456",
                                                     "996",
                                                     "")
@@ -423,7 +420,7 @@ class SendVerifyNegative(unittest.TestCase):
         Utils.commonSteps.send_sms("996",
                                    "string",
                                    "599989981",
-                                   Utils.Data_Object.auth_data.registration)
+                                   Utils.Data_Object.login_data.DataForLogin.registration_send_sms)
         response = Utils.commonSteps.verify_otp_sms("123456",
                                                     "996",
                                                     "")
@@ -440,7 +437,7 @@ class SendVerifyNegative(unittest.TestCase):
         Utils.commonSteps.send_sms("996",
                                    "string",
                                    "599989981",
-                                   Utils.Data_Object.auth_data.individual)
+                                   Utils.Data_Object.login_data.DataForLogin.individual_send_sms)
         response = Utils.commonSteps.verify_otp_sms("123456",
                                                     "996",
                                                     "499989981")
@@ -457,7 +454,7 @@ class SendVerifyNegative(unittest.TestCase):
         Utils.commonSteps.send_sms("996",
                                    "string",
                                    "599989981",
-                                   Utils.Data_Object.auth_data.business)
+                                   Utils.Data_Object.login_data.DataForLogin.business_sens_sms)
         response = Utils.commonSteps.verify_otp_sms("123456",
                                                     "996",
                                                     "499989981")
@@ -470,11 +467,11 @@ class SendVerifyNegative(unittest.TestCase):
     @allure.title("Registration with wrong number")
     @allure.description("register with wrong number, with correct otp and country code 996 ")
     @allure.severity(allure.severity_level.NORMAL)
-    def test_28_register_wrong_phone_(self):
+    def test_28_register_wrong_phone(self):
         Utils.commonSteps.send_sms("996",
                                    "string",
                                    "599989981",
-                                   Utils.Data_Object.auth_data.registration)
+                                   Utils.Data_Object.login_data.DataForLogin.registration_send_sms)
         response = Utils.commonSteps.verify_otp_sms("123456",
                                                     "996",
                                                     "499989981")
@@ -483,9 +480,37 @@ class SendVerifyNegative(unittest.TestCase):
         self.assertIn("message", sendSms)
         self.assertIn(sendSms["message"], '428 PRECONDITION_REQUIRED "SMS not send on phone 996499989981 "')
 
+    @allure.suite("Login Functionality - Check")
+    @allure.title("login  with empty phone for check")
+    @allure.description("try to login without inserting number in check endpoint")
+    @allure.severity(allure.severity_level.NORMAL)
+    def test_29_check_with_empty_phone(self):
+        response = Utils.commonSteps.check_user("")
+        sendSms = response.json()
+        self.assertEquals(response.status_code, 200)
+        self.assertIn("individualExists", sendSms)
+        self.assertIn("businessExists", sendSms)
+        self.assertIn(str(sendSms["individualExists"]), "False")
+        self.assertIn(str(sendSms["businessExists"]), "False")
 
-
-
+    @allure.suite(send_sms_login_business)
+    @allure.title("Login with empty phone")
+    @allure.description("Login for individual person with empty phone number and country code 996")
+    @allure.severity(allure.severity_level.CRITICAL)
+    def test_30_registration_of_registered_phone(self):
+        response = Utils.commonSteps.send_sms("996",
+                                              "string",
+                                              "599989981",
+                                              Utils.Data_Object
+                                              .login_data
+                                              .DataForLogin
+                                              .registration_send_sms)
+        sendSms = response.json()
+        print(response.text)
+        self.assertEquals(response.status_code, 409)
+        self.assertIn("message", sendSms)
+        self.assertIn(sendSms["message"],
+                      ['409 CONFLICT "Individual or Business user already exists for mobile number: 996599989981"'])
 
 
 
