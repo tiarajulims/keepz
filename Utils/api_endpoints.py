@@ -3,7 +3,7 @@ import json
 # Base URL
 base_url = "https://appdev.keepz.me:8888/common-service"
 
-# End Points Auth controller
+"""End Points Auth controller"""
 
 check_user = base_url + "/api/v1/auth/check"
 
@@ -15,8 +15,9 @@ login = base_url + "/api/v1/auth/login"
 
 registration = base_url + "/api/v1/auth/registration"
 
-#TODO "upgradeOrDowngrade" end point needs to be added once everything will be clear
+# TODO "upgradeOrDowngrade" end point needs to be added once everything will be clear
 
+
+"""End Points Profile controller """
 
 get_profile = base_url + "/api/v1/profile/details"
-

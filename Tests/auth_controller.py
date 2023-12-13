@@ -54,6 +54,7 @@ class AuthController(unittest.TestCase):
     def test_29_login_with_empty_phone(self):
         response = Utils.commonSteps.check_user("599989981")
         sendSms = response.json()
+        print(sendSms)
         self.assertEquals(response.status_code, 200)
         self.assertIn("individualExists", sendSms)
         self.assertIn("businessExists", sendSms)

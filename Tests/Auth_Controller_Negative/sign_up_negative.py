@@ -3,7 +3,6 @@ import allure
 import Utils.commonSteps
 import Utils.Data_Object.signup_data
 import Utils.api_endpoints
-import requests
 
 
 class SignUpNegative(unittest.TestCase):
@@ -165,8 +164,8 @@ class SignUpNegative(unittest.TestCase):
         reg_response = response.json()
         self.assertEquals(response.status_code, 400)
         self.assertIn("message", reg_response)
-        self.assertIn(reg_response["message"], '[iban-Is required, iban-Invalid Format]' or
-                      '[iban-Invalid Format, iban-Is required]')
+        self.assertIn(reg_response["message"], ['[iban-Is required, iban-Invalid Format]',
+                      '[iban-Invalid Format, iban-Is required]'])
 
     @allure.suite("Registration Functionality")
     @allure.title("Register business with empty iban")
@@ -569,38 +568,201 @@ class SignUpNegative(unittest.TestCase):
         self.assertIn(reg_response["message"],
                       "[name-Is required]")
 
+    @allure.suite("Registration Functionality")
+    @allure.title("Register individual with empty Personal Number")
+    @allure.description("Trying to register individual user with leaving empty personal Number")
+    @allure.severity(allure.severity_level.CRITICAL)
+    def test_29_register_ind_user_empty_personalNum(self):
+        userSmsId = Utils.commonSteps.send_and_verify(Utils.Data_Object.signup_data.generate_random_mobile_number(),
+                                                      "REGISTRATION")
+        response = Utils.commonSteps.register_account(birthDate="2013-12-13",
+                                                      deviceToken="string",
+                                                      iban="GE13BG7252322426883581",
+                                                      mobileOS="ANDROID",
+                                                      name="TestUser",
+                                                      personalNumber="",
+                                                      userSMSId=userSmsId,
+                                                      userType=Utils.Data_Object.signup_data.Sign_Up_Data.sms_type_individual)
+        reg_response = response.json()
+        self.assertEquals(response.status_code, 400)
+        self.assertIn("message", reg_response)
+        self.assertIn(reg_response["message"],
+                      ["[personalNumber-Length must be 11, personalNumber-Is required]", "[personalNumber-Is required, personalNumber-Length must be 11]"])
 
-    # TODO empty personal Num
-    # TODO None personal Num
-    # TODO format personal number
-    # TODO length personal Number
+    @allure.suite("Registration Functionality")
+    @allure.title("Register business with empty Personal Number")
+    @allure.description("Trying to register business user with leaving empty personal Number")
+    @allure.severity(allure.severity_level.CRITICAL)
+    def test_30_register_bus_user_empty_personalNum(self):
+        userSmsId = Utils.commonSteps.send_and_verify(Utils.Data_Object.signup_data.generate_random_mobile_number(),
+                                                      "REGISTRATION")
+        response = Utils.commonSteps.register_account(deviceToken="string",
+                                                      iban="GE13BG7252322426883581",
+                                                      mobileOS="ANDROID",
+                                                      name="TestUser",
+                                                      personalNumber="",
+                                                      userSMSId=userSmsId,
+                                                      userType=Utils.Data_Object.signup_data.Sign_Up_Data.sms_type_business)
+        reg_response = response.json()
+        self.assertEquals(response.status_code, 400)
+        self.assertIn("message", reg_response)
+        self.assertIn(reg_response["message"], ["[personalNumber-Is required, personalNumber-Length must be 9]",
+                                                "[personalNumber-Length must be 9, personalNumber-Is required]"])
+
+    @allure.suite("Registration Functionality")
+    @allure.title("Register individual with none Personal Number")
+    @allure.description("Trying to register individual user with none personal Number")
+    @allure.severity(allure.severity_level.CRITICAL)
+    def test_31_register_ind_user_none_personalNum(self):
+        userSmsId = Utils.commonSteps.send_and_verify(Utils.Data_Object.signup_data.generate_random_mobile_number(),
+                                                      "REGISTRATION")
+        response = Utils.commonSteps.register_account(birthDate="2014-12-12",
+                                                      deviceToken="string",
+                                                      iban="GE13BG7252322426883581",
+                                                      mobileOS="ANDROID",
+                                                      name="TestUser",
+                                                      personalNumber=None,
+                                                      userSMSId=userSmsId,
+                                                      userType=Utils.Data_Object.signup_data.Sign_Up_Data.sms_type_individual)
+        reg_response = response.json()
+        self.assertEquals(response.status_code, 400)
+        self.assertIn("message", reg_response)
+        self.assertIn(reg_response["message"], "[personalNumber-Is required]")
+
+    @allure.suite("Registration Functionality")
+    @allure.title("Register business with none Personal Number")
+    @allure.description("Trying to register business user with none personal Number")
+    @allure.severity(allure.severity_level.CRITICAL)
+    def test_32_register_bus_user_none_personalNum(self):
+        userSmsId = Utils.commonSteps.send_and_verify(Utils.Data_Object.signup_data.generate_random_mobile_number(),
+                                                      "REGISTRATION")
+        response = Utils.commonSteps.register_account(deviceToken="string",
+                                                      iban="GE13BG7252322426883581",
+                                                      mobileOS="ANDROID",
+                                                      name="TestUser",
+                                                      personalNumber=None,
+                                                      userSMSId=userSmsId,
+                                                      userType=Utils.Data_Object.signup_data.Sign_Up_Data.sms_type_business)
+        reg_response = response.json()
+        self.assertEquals(response.status_code, 400)
+        self.assertIn("message", reg_response)
+        self.assertIn(reg_response["message"], "[personalNumber-Is required]")
+
+    @allure.suite("Registration Functionality")
+    @allure.title("Register individual with 10 char Personal Number")
+    @allure.description("Trying to register individual user with 10 char personal Number")
+    @allure.severity(allure.severity_level.CRITICAL)
+    def test_33_register_ind_user_10_char_personalNum(self):
+        userSmsId = Utils.commonSteps.send_and_verify(Utils.Data_Object.signup_data.generate_random_mobile_number(),
+                                                      "REGISTRATION")
+        response = Utils.commonSteps.register_account(birthDate="2014-12-12",
+                                                      deviceToken="string",
+                                                      iban="GE13BG7252322426883581",
+                                                      mobileOS="ANDROID",
+                                                      name="TestUser",
+                                                      personalNumber="9201400842",
+                                                      userSMSId=userSmsId,
+                                                      userType=Utils.Data_Object.signup_data.Sign_Up_Data.sms_type_individual)
+        reg_response = response.json()
+        self.assertEquals(response.status_code, 400)
+        self.assertIn("message", reg_response)
+        self.assertIn(reg_response["message"], "[personalNumber-Length must be 11]")
+
+    @allure.suite("Registration Functionality")
+    @allure.title("Register individual with 12 char Personal Number")
+    @allure.description("Trying to register individual user with 12 char personal Number")
+    @allure.severity(allure.severity_level.CRITICAL)
+    def test_34_register_ind_user_10_char_personalNum(self):
+        userSmsId = Utils.commonSteps.send_and_verify(Utils.Data_Object.signup_data.generate_random_mobile_number(),
+                                                      "REGISTRATION")
+        response = Utils.commonSteps.register_account(birthDate="2014-12-12",
+                                                      deviceToken="string",
+                                                      iban="GE13BG7252322426883581",
+                                                      mobileOS="ANDROID",
+                                                      name="TestUser",
+                                                      personalNumber="920140084200",
+                                                      userSMSId=userSmsId,
+                                                      userType=Utils.Data_Object.signup_data.Sign_Up_Data.sms_type_individual)
+        reg_response = response.json()
+        self.assertEquals(response.status_code, 400)
+        self.assertIn("message", reg_response)
+        self.assertIn(reg_response["message"], "[personalNumber-Length must be 11]")
+
+    @allure.suite("Registration Functionality")
+    @allure.title("Register business with 8 char Personal Number")
+    @allure.description("Trying to register business user with none personal Number")
+    @allure.severity(allure.severity_level.CRITICAL)
+    def test_35_register_bus_user_8_char_personalNum(self):
+        userSmsId = Utils.commonSteps.send_and_verify(Utils.Data_Object.signup_data.generate_random_mobile_number(),
+                                                      "REGISTRATION")
+        response = Utils.commonSteps.register_account(deviceToken="string",
+                                                      iban="GE13BG7252322426883581",
+                                                      mobileOS="ANDROID",
+                                                      name="TestUser",
+                                                      personalNumber="elevench",
+                                                      userSMSId=userSmsId,
+                                                      userType=Utils.Data_Object.signup_data.Sign_Up_Data.sms_type_business)
+        reg_response = response.json()
+        print(reg_response)
+        self.assertEquals(response.status_code, 400)
+        self.assertIn("message", reg_response)
+        self.assertIn(reg_response["message"], "[personalNumber-Length must be 9]")
+
+    @allure.suite("Registration Functionality")
+    @allure.title("Register business with 10 char Personal Number")
+    @allure.description("Trying to register business user with none personal Number")
+    @allure.severity(allure.severity_level.CRITICAL)
+    def test_36_register_bus_user_10_char_personalNum(self):
+        userSmsId = Utils.commonSteps.send_and_verify(Utils.Data_Object.signup_data.generate_random_mobile_number(),
+                                                      "REGISTRATION")
+        response = Utils.commonSteps.register_account(deviceToken="string",
+                                                      iban="GE13BG7252322426883581",
+                                                      mobileOS="ANDROID",
+                                                      name="TestUser",
+                                                      personalNumber="9201400842",
+                                                      userSMSId=userSmsId,
+                                                      userType=Utils.Data_Object.signup_data.Sign_Up_Data.sms_type_business)
+        reg_response = response.json()
+        self.assertEquals(response.status_code, 400)
+        self.assertIn("message", reg_response)
+        self.assertIn(reg_response["message"], "[personalNumber-Length must be 9]")
 
 
+    @allure.suite("Registration Functionality")
+    @allure.title("Register individual with string as Personal Number")
+    @allure.description("Trying to register individual user with string as personal Number")
+    @allure.severity(allure.severity_level.CRITICAL)
+    def test_37_register_ind_user_invalid_personalNum(self):
+        userSmsId = Utils.commonSteps.send_and_verify(Utils.Data_Object.signup_data.generate_random_mobile_number(),
+                                                      "REGISTRATION")
+        response = Utils.commonSteps.register_account(birthDate="2014-12-12",
+                                                      deviceToken="string",
+                                                      iban="GE13BG7252322426883581",
+                                                      mobileOS="ANDROID",
+                                                      name="TestUser",
+                                                      personalNumber="elevencharr",
+                                                      userSMSId=userSmsId,
+                                                      userType=Utils.Data_Object.signup_data.Sign_Up_Data.sms_type_individual)
+        reg_response = response.json()
+        self.assertEquals(response.status_code, 400)
+        self.assertIn("message", reg_response)
+        self.assertIn(reg_response["message"], "[personalNumber-Length must be 11]")
 
-    def register_user(self, **data):
-        payload = {
-            "birthDate": data.get("birth_date"),
-            "deviceToken": data,
-            "iban": data,
-            "mobileName": "string",
-            "mobileOS": data,
-            "name": data,
-            "personalNumber": data,
-            "userSMSId": data,
-            "userType": data
-        }
-
-        res = requests.post(url=Utils.api_endpoints.registration,
-                            data=payload,
-                            headers=Utils.Data_Object.signup_data.Sign_Up_Data.headers)
-
-        print(res.text)
-
-    # def test_03test():
-    #     Tests.Auth_Controller_Negative.sign_up_negative.SignUpNegative.register_user(deviceToken='string',
-    #                                                                                  iban="GE30544445352926927826",
-    #                                                                                  mobileOS="ANDROID",
-    #                                                                                  name="JIje2228",
-    #                                                                                  personalNumber=62014008421,
-    #                                                                                  userSMSId=None,
-    #                                                                                  userType=Utils.Data_Object.signup_data.Sign_Up_Data.sms_type_individual)
+    @allure.suite("Registration Functionality")
+    @allure.title("Register business with string as  Personal Number")
+    @allure.description("Trying to register business user with string as personal Number")
+    @allure.severity(allure.severity_level.CRITICAL)
+    def test_38_register_bus_user_8_char_personalNum(self):
+        userSmsId = Utils.commonSteps.send_and_verify(Utils.Data_Object.signup_data.generate_random_mobile_number(),
+                                                      "REGISTRATION")
+        response = Utils.commonSteps.register_account(deviceToken="string",
+                                                      iban="GE13BG7252322426883581",
+                                                      mobileOS="ANDROID",
+                                                      name="TestUser",
+                                                      personalNumber="elevencha",
+                                                      userSMSId=userSmsId,
+                                                      userType=Utils.Data_Object.signup_data.Sign_Up_Data.sms_type_business)
+        reg_response = response.json()
+        self.assertEquals(response.status_code, 400)
+        self.assertIn("message", reg_response)
+        self.assertIn(reg_response["message"], "[personalNumber-Length must be 9]")
