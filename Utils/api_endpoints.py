@@ -1,5 +1,3 @@
-import json
-
 # Base URL
 base_url = "https://appdev.keepz.me:8888/common-service"
 
@@ -20,4 +18,43 @@ registration = base_url + "/api/v1/auth/registration"
 
 """End Points Profile controller """
 
-get_profile = base_url + "/api/v1/profile/details"
+# Get Endpoints
+
+profile = base_url + "/api/v1/profile"
+
+profile_details = base_url + "/api/v1/profile/details"
+
+tiny_url = base_url + "/api/v1/profile/tiny-url"
+
+# Post Endpoints
+
+complete_or_update_user = base_url + "api/v1/profile/admin"
+
+empty_user = base_url + "/api/v1/profile/bulk/create"
+
+profile_image = base_url + "/api/v1/profile/image"
+
+profile_logout = base_url + "/api/v1/profile/logout"
+
+logout_all = base_url + "/api/v1/profile/logout-all"
+
+
+def logout_from_session(session_id):
+    return base_url + f"/api/v1/profile/logout/{session_id}"
+
+
+# Put Endpoints
+
+put_profile_details = base_url + "api/v1/profile/details"
+
+profile_phone = base_url + "/api/v1/profile/phone"
+
+
+# Delete Endpoints
+
+delete_profile_soft_delete = base_url + "/api/v1/profile/soft-delete"
+
+
+def delete_profile_by_id(user_id):
+    return base_url + f"/api/v1/profile/soft-delete/{user_id}"
+
