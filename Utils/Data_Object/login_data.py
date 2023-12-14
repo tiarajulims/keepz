@@ -31,8 +31,8 @@ class DataForLogin:
 
 
 
-    individual_send_sms = "LOGIN_AS_INDIVIDUAL"
-    business_sens_sms = "LOGIN_AS_BUSINESS"
+    individual_send_sms = "LOGIN"
+    business_sens_sms = "LOGIN"
     registration_send_sms = "REGISTRATION"
 
     sms_type_individual = "INDIVIDUAL"
