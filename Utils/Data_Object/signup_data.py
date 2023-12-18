@@ -13,14 +13,10 @@ def generate_random_mobile_number():
 
 
 class Sign_Up_Data:
-
-
-
     headers = {
         'Accept': '*/*',
         'Content-Type': 'application/json'
     }
-
 
     payload_registration = {
         "birthDate": "2020-11-27",
@@ -34,7 +30,5 @@ class Sign_Up_Data:
         "userType": "INDIVIDUAL"
     }
 
-
     sms_type_individual = "INDIVIDUAL"
     sms_type_business = "BUSINESS"
-

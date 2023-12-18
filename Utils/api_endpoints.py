@@ -39,13 +39,13 @@ profile_logout = base_url + "/api/v1/profile/logout"
 logout_all = base_url + "/api/v1/profile/logout-all"
 
 
-def logout_from_session(session_id):
+def logout_from_session(session_id: str) -> str:
     return base_url + f"/api/v1/profile/logout/{session_id}"
 
 
 # Put Endpoints
 
-put_profile_details = base_url + "api/v1/profile/details"
+put_profile_details = base_url + "/api/v1/profile/details"
 
 profile_phone = base_url + "/api/v1/profile/phone"
 
@@ -55,6 +55,6 @@ profile_phone = base_url + "/api/v1/profile/phone"
 delete_profile_soft_delete = base_url + "/api/v1/profile/soft-delete"
 
 
-def delete_profile_by_id(user_id):
+def delete_profile_by_id(user_id: str):
     return base_url + f"/api/v1/profile/soft-delete/{user_id}"
 
