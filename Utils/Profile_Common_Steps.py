@@ -4,7 +4,7 @@ import sys
 import allure
 import requests
 
-import Utils.api_endpoints
+from Utils.api_endpoints import ApiEndpoints
 
 parent_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 sys.path.insert(0, parent_dir)
@@ -13,32 +13,46 @@ sys.path.insert(0, parent_dir)
 # Get Methods
 @allure.step
 def get_logged_profile(access_token):
-    header = {
-        'accept': '*/*',
-        'Authorization': 'Bearer ' + str(access_token)
-    }
-
-    response = requests.get(url=Utils.api_endpoints.profile, headers=header)
+    if len(access_token) < 10:
+        header = {
+            'accept': '*/*',
+        }
+    else:
+        header = {
+            'accept': '*/*',
+            'Authorization': 'Bearer ' + str(access_token)
+        }
+    response = requests.get(url=ApiEndpoints.profile, headers=header)
     return response
 
 
 @allure.step
 def get_profile_details(access_token):
-    header = {
-        'accept': '*/*',
-        'Authorization': 'Bearer ' + str(access_token)
-    }
-    response = requests.get(url=Utils.api_endpoints.profile_details, headers=header)
+    if len(access_token) < 10:
+        header = {
+            'accept': '*/*',
+        }
+    else:
+        header = {
+            'accept': '*/*',
+            'Authorization': 'Bearer ' + str(access_token)
+        }
+    response = requests.get(url=ApiEndpoints.profile_details, headers=header)
     return response
 
 
 @allure.step
 def get_tiny_url(access_token: str):
-    header = {
-        'accept': '*/*',
-        'Authorization': 'Bearer ' + str(access_token)
-    }
-    response = requests.get(url=Utils.api_endpoints.tiny_url, headers=header)
+    if len(access_token) < 10:
+        header = {
+            'accept': '*/*',
+        }
+    else:
+        header = {
+            'accept': '*/*',
+            'Authorization': 'Bearer ' + str(access_token)
+        }
+    response = requests.get(url=ApiEndpoints.base_url, headers=header)
     return response
 
 
@@ -47,11 +61,15 @@ def get_tiny_url(access_token: str):
 def post_profile_update(birth_date: str, completed_by: int, document: str, email: str, iban: str, profile_id: str,
                         mobile_number: str, name: str, official_name: str, personal_number: str, user_group_id: int,
                         user_type: str, verified: bool, access_token):
-    header = {
-        'accept': '*/*',
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + str(access_token)
-    }
+    if len(access_token) < 10:
+        header = {
+            'accept': '*/*',
+        }
+    else:
+        header = {
+            'accept': '*/*',
+            'Authorization': 'Bearer ' + str(access_token)
+        }
 
     body = {
         "birthDate": birth_date,
@@ -69,57 +87,80 @@ def post_profile_update(birth_date: str, completed_by: int, document: str, email
         "verified": verified
     }
 
-    response = requests.post(url=Utils.api_endpoints.complete_or_update_user, json=body, headers=header)
+    response = requests.post(url=ApiEndpoints.complete_or_update_user, json=body, headers=header)
     return response
 
 
 @allure.step
 def post_empty_users(number_of_users: int, access_token):
-    header = {
-        'accept': '*/*',
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + str(access_token)
-    }
+    if len(access_token) < 10:
+        header = {
+            'accept': '*/*',
+        }
+    else:
+        header = {
+            'accept': '*/*',
+            'Authorization': 'Bearer ' + str(access_token)
+        }
 
     body = {
         "numberOfUsers": number_of_users
     }
 
-    response = requests.post(url=Utils.api_endpoints.empty_user, json=body, headers=header)
+    response = requests.post(url=ApiEndpoints.empty_user, json=body, headers=header)
     return response
 
 
 @allure.step
 def post_profile_image(image_path, access_token):
-    header = {
-        'accept': '*/*',
-        'Authorization': 'Bearer ' + str(access_token)
-    }
-    files = {'file': ('image.jpg', open(image_path, 'rb'), 'image/jpeg')}
+    script_directory = os.path.dirname(os.path.realpath(__file__))
 
-    response = requests.post(url=Utils.api_endpoints.profile_image, headers=header, files=files)
+    if len(access_token) < 10:
+        header = {
+            'accept': '*/*',
+        }
+    else:
+        header = {
+            'accept': '*/*',
+            'Authorization': 'Bearer ' + str(access_token)
+        }
+
+    image_path_absolute = os.path.abspath(os.path.join(script_directory, image_path))
+
+    files = {'file': ('image.jpg', open(image_path_absolute, 'rb'), 'image/jpeg')}
+
+    response = requests.post(url=ApiEndpoints.profile_image, headers=header, files=files)
     return response
 
 
 @allure.step
 def post_profile_logout(access_token):
-    header = {
-        'accept': '*/*',
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + str(access_token)
-    }
-    response = requests.post(url=Utils.api_endpoints.profile_logout, headers=header)
+    if len(access_token) < 10:
+        header = {
+            'accept': '*/*',
+        }
+    else:
+        header = {
+            'accept': '*/*',
+            'Authorization': 'Bearer ' + str(access_token)
+        }
+    response = requests.post(url=ApiEndpoints.profile_logout, headers=header)
     return response
 
 
 @allure.step
 def post_logout_all(access_token):
-    header = {
-        'accept': '*/*',
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + str(access_token)
-    }
-    response = requests.post(url=Utils.api_endpoints.logout_all, headers=header)
+    if len(access_token) < 10:
+        header = {
+            'accept': '*/*',
+        }
+    else:
+        header = {
+            'accept': '*/*',
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + str(access_token)
+        }
+    response = requests.post(url=ApiEndpoints.logout_all, headers=header)
     return response
 
 
@@ -130,7 +171,7 @@ def post_logout_from_session(session_id: str, access_token):
         'Content-Type': 'application/json',
         'Authorization': 'Bearer ' + str(access_token)
     }
-    response = requests.post(url=Utils.api_endpoints.logout_from_session(session_id), headers=header)
+    response = requests.post(url=ApiEndpoints.logout_from_session(session_id), headers=header)
     return response
 
 
@@ -150,7 +191,7 @@ def add_profile_details(birth_date: str, iban: str, name: str, personal_num: str
         'Authorization': 'Bearer ' + str(access_token)
     }
 
-    response = requests.put(url=Utils.api_endpoints.put_profile_details, json=body, headers=header)
+    response = requests.put(url=ApiEndpoints.put_profile_details, json=body, headers=header)
     return response
 
 
@@ -165,7 +206,7 @@ def profile_phone(user_sms_id: str, access_token):
         'Authorization': 'Bearer ' + str(access_token)
     }
 
-    response = requests.put(url=Utils.api_endpoints.profile_phone, json=body, headers=header)
+    response = requests.put(url=ApiEndpoints.profile_phone, json=body, headers=header)
     return response
 
 
@@ -178,7 +219,7 @@ def soft_delete(access_token):
         'Authorization': 'Bearer ' + str(access_token)
     }
 
-    response = requests.delete(url=Utils.api_endpoints.delete_profile_soft_delete, headers=header)
+    response = requests.delete(url=ApiEndpoints.delete_profile_soft_delete, headers=header)
     return response
 
 
@@ -190,5 +231,5 @@ def soft_delete_by_id(user_id: str, access_token):
         'Authorization': 'Bearer ' + str(access_token)
     }
 
-    response = requests.delete(url=Utils.api_endpoints.delete_profile_by_id(user_id), headers=header)
+    response = requests.delete(url=ApiEndpoints.delete_profile_by_id(user_id), headers=header)
     return response
