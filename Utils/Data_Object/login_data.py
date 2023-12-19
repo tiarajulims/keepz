@@ -1,6 +1,4 @@
 class DataForLogin:
-
-
     headers = {
         'Accept': '*/*',
         'Content-Type': 'application/json'
@@ -28,12 +26,8 @@ class DataForLogin:
     }
 
 
-
-
-
     individual_send_sms = "LOGIN"
     business_sens_sms = "LOGIN"
     registration_send_sms = "REGISTRATION"
-
     sms_type_individual = "INDIVIDUAL"
     sms_type_business = "BUSINESS"

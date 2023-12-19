@@ -1,10 +1,11 @@
 import json
-import requests
 import os
 import sys
+
+import requests
+
 import Utils.Data_Object.login_data
 import Utils.api_endpoints
-from requests import Response
 
 parent_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 sys.path.insert(0, parent_dir)
@@ -76,7 +77,7 @@ def login(devToken, mobName, mobOS, userSmsId, userType):
 """ METHOD WHICH SENDS AND VERIFIES OTP AND RETURNS USER SMS ID"""
 
 
-def send_and_verify(phone, smsType ):
+def send_and_verify(phone, smsType):
     send_sms("996", "string", phone, smsType)
 
     response = verify_otp_sms("123456", "996", phone)
@@ -89,7 +90,8 @@ def send_and_verify(phone, smsType ):
 
 
 def get_auth_token():
-    userSmsId = Utils.commonSteps.send_and_verify("599989981", Utils.Data_Object.login_data.DataForLogin.individual_send_sms)
+    userSmsId = Utils.commonSteps.send_and_verify("599989981",
+                                                  Utils.Data_Object.login_data.DataForLogin.individual_send_sms)
 
     res_login = Utils.commonSteps.login("string",
                                         "string",
@@ -105,7 +107,6 @@ def get_auth_token():
 
 
 def register_account(**data):
-
     payload_registration = {
         "birthDate": data.get("birthDate"),
         "deviceToken": data.get("deviceToken"),
@@ -130,5 +131,5 @@ def get_method(access_token):
         'Content-Type': 'application/json',
         'Authorization': 'Bearer ' + access_token
     }
-    info = requests.get(url=Utils.api_endpoints.get_profile, headers=header)
+    info = requests.get(url=Utils.api_endpoints.profile, headers=header)
     return info
