@@ -27,7 +27,7 @@ class AuthController(unittest.TestCase):
         return response
 
     def test_03_verify_sms(self):
-        response = Utils.commonSteps.vdserify_otp_sms("123456",
+        response = Utils.commonSteps.verify_otp_sms("123456",
                                                     "996",
                                                     "599989981")
         self.assertEquals(response.status_code, 202)

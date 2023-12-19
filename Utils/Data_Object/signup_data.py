@@ -1,15 +1,4 @@
-import random
 
-
-def generate_random_number():
-    random_number = ''.join(random.choices('1234567890', k=6))
-    return random_number
-
-
-def generate_random_mobile_number():
-    response = generate_random_number()
-    mob_number = "599" + response
-    return mob_number
 
 
 class Sign_Up_Data:

@@ -54,6 +54,8 @@ def verify_otp_sms(code, countrycode, phoneNumber):
     return response
 
 
+
+
 """METHOD WHICH GENERATES A TOKEN AND RETURNS IT"""
 
 
@@ -68,8 +70,9 @@ def login(devToken, mobName, mobOS, userSmsId, userType):
     response = requests.post(url=Utils.api_endpoints.login,
                              data=json.dumps(payload_Login),
                              headers=Utils.Data_Object.login_data.DataForLogin.headers)
-    print(response.text)
-    return response
+    data = response.json()
+    access_token = data.get('access_token')
+    return access_token
 
 
 """ METHOD WHICH SENDS AND VERIFIES OTP AND RETURNS USER SMS ID"""
@@ -81,7 +84,6 @@ def send_and_verify(phone, smsType):
     response = verify_otp_sms("123456", "996", phone)
 
     userSmsId = response.text
-
     return userSmsId
 
 
