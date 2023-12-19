@@ -2,18 +2,15 @@ import unittest
 import allure
 import sys
 import os
+
+parent_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+sys.path.insert(0, parent_dir)
 import Utils.commonSteps
 import Utils.commonSteps
 import Utils.Data_Object.login_data
-parent_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
-sys.path.insert(0, parent_dir)
-
 
 
 class SendVerifyNegative(unittest.TestCase):
-
-
-
     # ALLURE SUITE TITLES FOR SEND SMS
     send_sms_login_individual = "Login Functionality - Send Sms -  Individual"
     send_sms_login_business = "Login Functionality - Send Sms - Business"
@@ -511,6 +508,3 @@ class SendVerifyNegative(unittest.TestCase):
         self.assertIn("message", sendSms)
         self.assertIn(sendSms["message"],
                       ['409 CONFLICT "Individual or Business user already exists for mobile number: 996599989981"'])
-
-
-
