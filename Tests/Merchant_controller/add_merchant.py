@@ -14,7 +14,7 @@ parent_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 sys.path.insert(0, parent_dir)
 
 
-class Add_merchant_negative(unittest.TestCase):
+class AddMerchantNegative(unittest.TestCase):
 
     @allure.suite("Create Merchant Functionality")
     @allure.title("create merchant with empty branch address")
@@ -576,7 +576,7 @@ class Add_merchant_negative(unittest.TestCase):
     @allure.title("create merchant with empty merchant name")
     @allure.description("trying to create a merchant and branch with empty merchant name")
     @allure.severity(allure.severity_level.CRITICAL)
-    def test_24_add_merchant_registered_mobileNumber(self):
+    def test_24_add_merchant_empty_name(self):
         payload = copy.copy(Merchant_data.payload)
         payload["name"] = ""
         response = create_merchant(payload)
@@ -585,4 +585,49 @@ class Add_merchant_negative(unittest.TestCase):
         self.assertEquals(response.status_code, 400)
         self.assertIn("message", json_resp)
         self.assertIn(json_resp["message"],
-                      "409 CONFLICT \"Individual or Business user already exists for mobile number: 995667790233\"")
+                      "[name-Is required]")
+
+    @allure.suite("Create Merchant Functionality")
+    @allure.title("create merchant with None merchant name")
+    @allure.description("trying to create a merchant and branch with None merchant name")
+    @allure.severity(allure.severity_level.CRITICAL)
+    def test_24_add_merchant_none_name(self):
+        payload = copy.copy(Merchant_data.payload)
+        payload["name"] = None
+        response = create_merchant(payload)
+        json_resp = response.json()
+        print(response.text)
+        self.assertEquals(response.status_code, 400)
+        self.assertIn("message", json_resp)
+        self.assertIn(json_resp["message"],
+                      "[name-Is required]")
+
+    @allure.suite("Create Merchant Functionality")
+    @allure.title("create merchant with space merchant name")
+    @allure.description("trying to create a merchant and branch with space merchant name")
+    @allure.severity(allure.severity_level.CRITICAL)
+    def test_24_add_merchant_space_name(self):
+        payload = copy.copy(Merchant_data.payload)
+        payload["name"] = "    "
+        response = create_merchant(payload)
+        json_resp = response.json()
+        print(response.text)
+        self.assertEquals(response.status_code, 400)
+        self.assertIn("message", json_resp)
+        self.assertIn(json_resp["message"],
+                      "[name-Is required]")
+
+    @allure.suite("Create Merchant Functionality")
+    @allure.title("create merchant with space merchant name")
+    @allure.description("trying to create a merchant and branch with space merchant name")
+    @allure.severity(allure.severity_level.CRITICAL)
+    def test_24_add_merchant_space_name(self):
+        payload = copy.copy(Merchant_data.payload)
+        payload["name"] = "  1  "
+        response = create_merchant(payload)
+        json_resp = response.json()
+        print(response.text)
+        self.assertEquals(response.status_code, 400)
+        self.assertIn("message", json_resp)
+        self.assertIn(json_resp["message"],
+                      "[name-Is required]")

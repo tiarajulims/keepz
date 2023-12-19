@@ -2,13 +2,12 @@ import json
 import os
 import sys
 
-import requests
-
-import Utils.Data_Object.login_data
-import Utils.api_endpoints
-
 parent_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 sys.path.insert(0, parent_dir)
+
+import requests
+import Utils.Data_Object.login_data
+import Utils.api_endpoints
 
 """ METHOD TO CHECK IF USER HAS ACCOUNT ASA INDIVIDUAL OR BUSINESS"""
 

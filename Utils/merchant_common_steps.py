@@ -3,14 +3,15 @@ import json
 import os
 import sys
 import requests
+
+parent_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+sys.path.insert(0, parent_dir)
+
 import Utils.api_endpoints
 import Utils.Data_Object.merchant_data
 import Utils.commonSteps
 import Utils.data_generator
 from Utils.Data_Object.merchant_data import Merchant_data
-
-parent_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
-sys.path.insert(0, parent_dir)
 
 """Methods to get Token """
 

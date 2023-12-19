@@ -58,3 +58,55 @@ delete_profile_soft_delete = base_url + "/api/v1/profile/soft-delete"
 def delete_profile_by_id(user_id):
     return base_url + f"/api/v1/profile/soft-delete/{user_id}"
 
+
+""""End Points Merchant Controller ------------------------------------------------------------------------------------"""
+
+
+add_merchant = base_url + "/api/v1/merchant"
+
+
+def update_merchant(merchantId):
+    return base_url + f"/api/v1/merchant/{merchantId}"
+
+
+def delete_merchant(merchantId):
+    return base_url + f"/api/v1/merchant/{merchantId}"
+
+
+def activate_merchant(merchantId):
+    return base_url + f"/api/v1/merchant/activate/{merchantId}"
+
+
+def deactivate_merchant(merchantId):
+    return base_url + f"/api/v1/merchant/deactivate/{merchantId}"
+
+
+""" End points Branch Controller ------------------------------------------------------------------------------------ """
+
+
+add_branch = base_url + "/api/v1/branch"
+
+
+def update_branch(branchId):
+    return base_url + f"/api/v1/branch/{branchId}"
+
+
+def delete_branch(branchId):
+    return base_url + f"/api/v1/branch/{branchId}"
+
+
+def activate_branch(branchId):
+    return base_url + f"/api/v1/branch/activate/{branchId}"
+
+
+create_empty_branch = base_url + "/api/v1/branch/bulk"
+
+
+def deactivate_branch(branchId):
+    return base_url + f"/api/v1/branch/deactivate/{branchId}"
+
+
+
+def set_master_branch(branchId):
+    return base_url + f"/api/v1/branch/setMaster/{branchId}"
+
