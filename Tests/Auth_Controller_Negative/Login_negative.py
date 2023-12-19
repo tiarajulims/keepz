@@ -3,7 +3,7 @@ import allure
 import unittest
 import Utils.commonSteps
 import Utils.api_endpoints
-import Utils.Data_Object.login_data
+from Utils.Data_Object.login_data import DataForLogin
 
 
 class LoginNegative(unittest.TestCase):
@@ -15,12 +15,12 @@ class LoginNegative(unittest.TestCase):
     def test_01_login_empty_dev_token_STI_UTI(self):
         """Login method with empty device token, Sms type individual & UserType Individual
          STI - Sms Type individual, UTI - User Type Individual """
-        Utils.commonSteps.send_and_verify("599989981", Utils.Data_Object.login_data.DataForLogin.sms_type_individual)
+        Utils.commonSteps.send_and_verify("599989981", DataForLogin.sms_type_individual)
         response = Utils.commonSteps.login("",
                                            "string",
                                            "ANDROID",
                                            "testtest",
-                                           Utils.Data_Object.login_data.DataForLogin.sms_type_individual)
+                                           DataForLogin.sms_type_individual)
         login_response = response.json()
         self.assertEquals(response.status_code, 400)
         self.assertIn("message", login_response)
@@ -33,12 +33,12 @@ class LoginNegative(unittest.TestCase):
     def test_02_login_empty_dev_token_STI_UTB(self):
         """Login method with empty device token, Sms type individual & UserType Business
          STI - Sms Type individual, UTB - User Type Business"""
-        Utils.commonSteps.send_and_verify("599989981", Utils.Data_Object.login_data.DataForLogin.individual_send_sms)
+        Utils.commonSteps.send_and_verify("599989981", DataForLogin.individual_send_sms)
         response = Utils.commonSteps.login("",
                                            "string",
                                            "ANDROID",
                                            "testtest",
-                                           Utils.Data_Object.login_data.DataForLogin.sms_type_business)
+                                           DataForLogin.sms_type_business)
         login_response = response.json()
         self.assertEquals(response.status_code, 400)
         self.assertIn("message", login_response)
@@ -51,12 +51,12 @@ class LoginNegative(unittest.TestCase):
     def test_03_login_empty_dev_token_STB_UTB(self):
         """Login method with empty device token, Sms type Business & UserType Business
          STB - Sms Type Business, UTB - User Type Business """
-        Utils.commonSteps.send_and_verify("599989981", Utils.Data_Object.login_data.DataForLogin.sms_type_business)
+        Utils.commonSteps.send_and_verify("599989981", DataForLogin.sms_type_business)
         response = Utils.commonSteps.login("",
                                            "string",
                                            "ANDROID",
                                            "testtest",
-                                           Utils.Data_Object.login_data.DataForLogin.sms_type_business)
+                                           DataForLogin.sms_type_business)
         login_response = response.json()
         self.assertEquals(response.status_code, 400)
         self.assertIn("message", login_response)
@@ -69,12 +69,12 @@ class LoginNegative(unittest.TestCase):
     def test_04_login_empty_dev_token_STB_UTI(self):
         """Login method with empty device token, Sms type Business & UserType Individual
          STB - Sms Type Business, UTI - User Type Individual"""
-        Utils.commonSteps.send_and_verify("599989981", Utils.Data_Object.login_data.DataForLogin.sms_type_business)
+        Utils.commonSteps.send_and_verify("599989981", DataForLogin.sms_type_business)
         response = Utils.commonSteps.login("",
                                            "string",
                                            "ANDROID",
                                            "testtest",
-                                           Utils.Data_Object.login_data.DataForLogin.sms_type_individual)
+                                           DataForLogin.sms_type_individual)
         login_response = response.json()
         self.assertEquals(response.status_code, 400)
         self.assertIn("message", login_response)
@@ -87,13 +87,13 @@ class LoginNegative(unittest.TestCase):
     def test_05_login_empty_mobileOS_STI_UTI(self):
         """Login with empty mobile OS , Sms Type individual & User Type Individual
         STI - Sms Type individual, UTI - User Type Individual"""
-        response = Utils.commonSteps.send_and_verify("599989981", Utils.Data_Object.login_data.DataForLogin.sms_type_individual)
+        response = Utils.commonSteps.send_and_verify("599989981", DataForLogin.sms_type_individual)
         userSmsId = json.dumps(response)
         response1 = Utils.commonSteps.login("string",
                                             "string",
                                             "",
                                             userSmsId,
-                                            Utils.Data_Object.login_data.DataForLogin.sms_type_individual)
+                                            DataForLogin.sms_type_individual)
         login_response = response1.json()
         self.assertEquals(response1.status_code, 400)
         self.assertIn("message", login_response)
@@ -107,13 +107,13 @@ class LoginNegative(unittest.TestCase):
     def test_06_login_empty_mobile_OS_STI_UTB(self):
         """Login with empty mobile OS , Sms Type individual & User Type Business
         STI - Sms Type individual, UTB - User Type Business"""
-        response = Utils.commonSteps.send_and_verify("599989981", Utils.Data_Object.login_data.DataForLogin.sms_type_individual)
+        response = Utils.commonSteps.send_and_verify("599989981", DataForLogin.sms_type_individual)
         userSmsId = json.dumps(response)
         response1 = Utils.commonSteps.login("string",
                                             "string",
                                             "",
                                             userSmsId,
-                                            Utils.Data_Object.login_data.DataForLogin.sms_type_business)
+                                            DataForLogin.sms_type_business)
         login_response = response1.json()
         self.assertEquals(response1.status_code, 400)
         self.assertIn("message", login_response)
@@ -127,13 +127,13 @@ class LoginNegative(unittest.TestCase):
     def test_07_login_empty_mobile_OS_STB_UTB(self):
         """Login with empty mobile OS , Sms Type business & User Type Business
         STB - Sms Type business, UTB - User Type Business """
-        response = Utils.commonSteps.send_and_verify("599989981", Utils.Data_Object.login_data.DataForLogin.sms_type_business)
+        response = Utils.commonSteps.send_and_verify("599989981", DataForLogin.sms_type_business)
         userSmsId = json.dumps(response)
         response1 = Utils.commonSteps.login("string",
                                             "string",
                                             "",
                                             userSmsId,
-                                            Utils.Data_Object.login_data.DataForLogin.sms_type_business)
+                                            DataForLogin.sms_type_business)
         login_response = response1.json()
         self.assertEquals(response1.status_code, 400)
         self.assertIn("message", login_response)
@@ -147,13 +147,13 @@ class LoginNegative(unittest.TestCase):
     def test_08_login_empty_mobile_OS_STB_UTI(self):
         """Login with empty mobile OS , Sms Type business & User Type Business
         STB - Sms Type business, UTI - User Type individual """
-        response = Utils.commonSteps.send_and_verify("599989981", Utils.Data_Object.login_data.DataForLogin.sms_type_individual)
+        response = Utils.commonSteps.send_and_verify("599989981", DataForLogin.sms_type_individual)
         userSmsId = json.dumps(response)
         response1 = Utils.commonSteps.login("string",
                                             "string",
                                             "",
                                             userSmsId,
-                                            Utils.Data_Object.login_data.DataForLogin.sms_type_business)
+                                            DataForLogin.sms_type_business)
         login_response = response1.json()
         self.assertEquals(response1.status_code, 400)
         self.assertIn("message", login_response)
@@ -167,12 +167,12 @@ class LoginNegative(unittest.TestCase):
     def test_09_login_empty_userSmsId_STI_UTI(self):
         """Login with empty userSmsId, Sms Type individual & User Type individual
         STI - Sms Type individual, UTI - User Type individual"""
-        Utils.commonSteps.send_and_verify("599989981", Utils.Data_Object.login_data.DataForLogin.sms_type_individual)
+        Utils.commonSteps.send_and_verify("599989981", DataForLogin.sms_type_individual)
         response1 = Utils.commonSteps.login("string",
                                             "string",
                                             "ANDROID",
                                             "",
-                                            Utils.Data_Object.login_data.DataForLogin.sms_type_individual)
+                                            DataForLogin.sms_type_individual)
         login_response = response1.json()
         print(response1)
         self.assertEquals(response1.status_code, 400)
@@ -186,12 +186,12 @@ class LoginNegative(unittest.TestCase):
     def test_10_login_empty_userSmsId_STI_UTB(self):
         """Login with empty userSmsId, Sms Type individual & User Type Business
         STI - Sms Type individual, UTB - User Type Business"""
-        Utils.commonSteps.send_and_verify("599989981", Utils.Data_Object.login_data.DataForLogin.sms_type_individual)
+        Utils.commonSteps.send_and_verify("599989981", DataForLogin.sms_type_individual)
         response1 = Utils.commonSteps.login("string",
                                             "string",
                                             "ANDROID",
                                             "",
-                                            Utils.Data_Object.login_data.DataForLogin.sms_type_business)
+                                            DataForLogin.sms_type_business)
         login_response = response1.json()
         print(response1)
         self.assertEquals(response1.status_code, 400)
@@ -205,12 +205,12 @@ class LoginNegative(unittest.TestCase):
     def test_11_login_empty_userSmsId_STB_UTB(self):
         """Login with empty userSmsId, Sms Type Business & User Type Business
         STB - Sms Type Business, UTB - User Type Business"""
-        Utils.commonSteps.send_and_verify("599989981", Utils.Data_Object.login_data.DataForLogin.sms_type_business)
+        Utils.commonSteps.send_and_verify("599989981", DataForLogin.sms_type_business)
         response1 = Utils.commonSteps.login("string",
                                             "string",
                                             "ANDROID",
                                             "",
-                                            Utils.Data_Object.login_data.DataForLogin.sms_type_business)
+                                            DataForLogin.sms_type_business)
         login_response = response1.json()
         print(response1)
         self.assertEquals(response1.status_code, 400)
@@ -224,12 +224,12 @@ class LoginNegative(unittest.TestCase):
     def test_12_login_empty_userSmsId_STB_UTI(self):
         """Login with empty userSmsId, Sms Type Business & User Type individual
         STB - Sms Type Business, UTI - User Type individual"""
-        Utils.commonSteps.send_and_verify("599989981", Utils.Data_Object.login_data.DataForLogin.sms_type_business)
+        Utils.commonSteps.send_and_verify("599989981", DataForLogin.sms_type_business)
         response1 = Utils.commonSteps.login("string",
                                             "string",
                                             "ANDROID",
                                             "",
-                                            Utils.Data_Object.login_data.DataForLogin.sms_type_individual)
+                                            DataForLogin.sms_type_individual)
         login_response = response1.json()
         print(response1)
         self.assertEquals(response1.status_code, 400)
@@ -243,12 +243,12 @@ class LoginNegative(unittest.TestCase):
     def test_13_login_empty_userSmsId_STI_UTI(self):
         """Login with wrong userSmsId, Sms Type individual & User Type individual
         STB - Sms Type Business, UTI - User Type individual"""
-        response = Utils.commonSteps.send_and_verify("599989981", Utils.Data_Object.login_data.DataForLogin.individual_send_sms)
+        response = Utils.commonSteps.send_and_verify("599989981", DataForLogin.individual_send_sms)
         response1 = Utils.commonSteps.login("string",
                                             "string",
                                             "ANDROID",
                                             response + "test",
-                                            Utils.Data_Object.login_data.DataForLogin.sms_type_individual)
+                                            DataForLogin.sms_type_individual)
         login_response = response1.json()
         self.assertEquals(response1.status_code, 404)
         self.assertIn("message", login_response)
@@ -261,12 +261,12 @@ class LoginNegative(unittest.TestCase):
     def test_14_login_empty_userSmsId_STB_UTI(self):
         """Login with wrong userSmsId, Sms Type business & User Type individual
         STB - Sms Type Business, UTI - User Type individual"""
-        response = Utils.commonSteps.send_and_verify("599989981", Utils.Data_Object.login_data.DataForLogin.business_sens_sms)
+        response = Utils.commonSteps.send_and_verify("599989981", DataForLogin.business_sens_sms)
         response1 = Utils.commonSteps.login("string",
                                             "string",
                                             "ANDROID",
                                             response + "test",
-                                            Utils.Data_Object.login_data.DataForLogin.sms_type_individual)
+                                            DataForLogin.sms_type_individual)
         login_response = response1.json()
         self.assertEquals(response1.status_code, 404)
         self.assertIn("message", login_response)
@@ -279,12 +279,12 @@ class LoginNegative(unittest.TestCase):
     def test_15_login_empty_userSmsId_STB_UTB(self):
         """Login with wrong userSmsId, Sms Type business & User Type business
         STB - Sms Type business, UTB - User Type business"""
-        response = Utils.commonSteps.send_and_verify("599989981", Utils.Data_Object.login_data.DataForLogin.individual_send_sms)
+        response = Utils.commonSteps.send_and_verify("599989981", DataForLogin.individual_send_sms)
         response1 = Utils.commonSteps.login("string",
                                             "string",
                                             "ANDROID",
                                             response + "test",
-                                            Utils.Data_Object.login_data.DataForLogin.sms_type_individual)
+                                            DataForLogin.sms_type_individual)
         login_response = response1.json()
         self.assertEquals(response1.status_code, 404)
         self.assertIn("message", login_response)
@@ -297,12 +297,12 @@ class LoginNegative(unittest.TestCase):
     def test_16_login_empty_userSmsId_STI_UTB(self):
         """Login with wrong userSmsId, Sms Type business & User Type business
         STI - Sms Type individual, UTI - User Type business"""
-        response = Utils.commonSteps.send_and_verify("599989981", Utils.Data_Object.login_data.DataForLogin.individual_send_sms)
+        response = Utils.commonSteps.send_and_verify("599989981", DataForLogin.individual_send_sms)
         response1 = Utils.commonSteps.login("string",
                                             "string",
                                             "ANDROID",
                                             response + "test",
-                                            Utils.Data_Object.login_data.DataForLogin.sms_type_business)
+                                            DataForLogin.sms_type_business)
         login_response = response1.json()
         self.assertEquals(response1.status_code, 404)
         self.assertIn("message", login_response)
@@ -313,7 +313,7 @@ class LoginNegative(unittest.TestCase):
     @allure.description("Login without entering user type, else data is correct")
     @allure.severity(allure.severity_level.CRITICAL)
     def test_17_login_with_empty_userType(self):
-        response = Utils.commonSteps.send_and_verify("599989981", Utils.Data_Object.login_data.DataForLogin.individual_send_sms)
+        response = Utils.commonSteps.send_and_verify("599989981", DataForLogin.individual_send_sms)
         response1 = Utils.commonSteps.login("string",
                                             "string",
                                             "ANDROID",
