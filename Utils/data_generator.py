@@ -4,6 +4,9 @@ from faker import Faker
 import io
 from PIL import Image
 
+
+
+
 def generate_random_number():
     random_number = ''.join(random.choices('1234567890', k=6))
     return random_number
@@ -16,7 +19,7 @@ def generate_personal_id():
 
 def generate_random_mobile_number() -> str:
     response = generate_random_number()
-    mob_number = "996599" + response
+    mob_number = "599" + response
     return mob_number
 
 
@@ -57,8 +60,8 @@ def test_get_fake_image_url(width=300, height=200):
     return f'https://picsum.photos/{width}/{height}/?random'
 
 
-def test_download_image(url):
-    response = requests.get(url)
+def test_download_image():
+    response = requests.get()
     return Image.open(io.BytesIO(response.content))
 
 

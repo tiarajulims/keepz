@@ -1,21 +1,28 @@
+import random
 
+from Utils import data_generator
 
 
 class Sign_Up_Data:
+
+    mobOS = ["ANDROID", "IOS", "UNKNOWN"]
+
+
     headers = {
         'Accept': '*/*',
         'Content-Type': 'application/json'
     }
 
     payload_registration = {
-        "birthDate": "2020-11-27",
+        "birthDate": data_generator.generate_fake_birthDate(),
         "deviceToken": "string",
-        "iban": "GE16TB1544777371444667",
+        "iban": data_generator.iban_generator(),
         "mobileName": "string",
-        "mobileOS": "ANDROID",
-        "name": "Jijelava",
-        "personalNumber": "62014008420",
-        "userSMSId": "40f84c1a-1de0-4a33-9b16-d634cf760a03",
+        "mobileNumber": data_generator.generate_random_mobile_number(),
+        "mobileOS": random.choice(mobOS),
+        "name": data_generator.generate_fake_name(),
+        "personalNumber": data_generator.generate_personal_id(),
+        "userSMSId": "string",
         "userType": "INDIVIDUAL"
     }
 

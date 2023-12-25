@@ -5,13 +5,13 @@ base_url = "https://appdev.keepz.me:8888/common-service"
 
 check_user = base_url + "/api/v1/auth/check"
 
-send_sms = base_url + "/api/v1/auth/send-sms"
+send_sms_url = base_url + "/api/v1/auth/send-sms"
 
-verify_sms = base_url + "/api/v1/auth/verify-sms"
+verify_sms_url = base_url + "/api/v1/auth/verify-sms"
 
-login = base_url + "/api/v1/auth/login"
+login_url = base_url + "/api/v1/auth/login"
 
-registration = base_url + "/api/v1/auth/registration"
+registration_url = base_url + "/api/v1/auth/registration"
 
 # TODO "upgradeOrDowngrade" end point needs to be added once everything will be clear
 
