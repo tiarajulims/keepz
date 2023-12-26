@@ -111,6 +111,7 @@ def register_account(**data):
         "deviceToken": data.get("deviceToken"),
         "iban": data.get("iban"),
         "mobileName": "string",
+        "mobileNumber" : data.get("mobileNumber"),
         "mobileOS": data.get("mobileOS"),
         "name": data.get("name"),
         "personalNumber": data.get("personalNumber"),

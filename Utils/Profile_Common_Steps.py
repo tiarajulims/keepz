@@ -4,7 +4,9 @@ import sys
 import allure
 import requests
 
-from Utils.api_endpoints import ApiEndpoints
+from Utils.api_endpoints import put_profile_details, profile_phone, empty_user, profile_logout, logout_all, profile, \
+    profile_details, delete_profile_by_id, logout_from_session, delete_profile_soft_delete, complete_or_update_user, \
+    tiny_url, profile_image
 
 parent_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 sys.path.insert(0, parent_dir)
@@ -22,7 +24,7 @@ def get_logged_profile(access_token):
             'accept': '*/*',
             'Authorization': 'Bearer ' + str(access_token)
         }
-    response = requests.get(url=ApiEndpoints.profile, headers=header)
+    response = requests.get(url=profile, headers=header)
     return response
 
 
@@ -35,9 +37,9 @@ def get_profile_details(access_token):
     else:
         header = {
             'accept': '*/*',
-            'Authorization': 'Bearer ' + str(access_token)
+            'Authorization': 'bearer ' + str(access_token)
         }
-    response = requests.get(url=ApiEndpoints.profile_details, headers=header)
+    response = requests.get(url=profile_details, headers=header)
     return response
 
 
@@ -52,7 +54,8 @@ def get_tiny_url(access_token: str):
             'accept': '*/*',
             'Authorization': 'Bearer ' + str(access_token)
         }
-    response = requests.get(url=ApiEndpoints.base_url, headers=header)
+    response = requests.get(url=tiny_url, headers=header)
+
     return response
 
 
@@ -87,7 +90,7 @@ def post_profile_update(birth_date: str, completed_by: int, document: str, email
         "verified": verified
     }
 
-    response = requests.post(url=ApiEndpoints.complete_or_update_user, json=body, headers=header)
+    response = requests.post(url=complete_or_update_user, json=body, headers=header)
     return response
 
 
@@ -107,7 +110,7 @@ def post_empty_users(number_of_users: int, access_token):
         "numberOfUsers": number_of_users
     }
 
-    response = requests.post(url=ApiEndpoints.empty_user, json=body, headers=header)
+    response = requests.post(url=empty_user, json=body, headers=header)
     return response
 
 
@@ -129,7 +132,7 @@ def post_profile_image(image_path, access_token):
 
     files = {'file': ('image.jpg', open(image_path_absolute, 'rb'), 'image/jpeg')}
 
-    response = requests.post(url=ApiEndpoints.profile_image, headers=header, files=files)
+    response = requests.post(url=profile_image, headers=header, files=files)
     return response
 
 
@@ -144,7 +147,7 @@ def post_profile_logout(access_token):
             'accept': '*/*',
             'Authorization': 'Bearer ' + str(access_token)
         }
-    response = requests.post(url=ApiEndpoints.profile_logout, headers=header)
+    response = requests.post(url=profile_logout, headers=header)
     return response
 
 
@@ -160,7 +163,7 @@ def post_logout_all(access_token):
             'Content-Type': 'application/json',
             'Authorization': 'Bearer ' + str(access_token)
         }
-    response = requests.post(url=ApiEndpoints.logout_all, headers=header)
+    response = requests.post(url=logout_all, headers=header)
     return response
 
 
@@ -171,13 +174,13 @@ def post_logout_from_session(session_id: str, access_token):
         'Content-Type': 'application/json',
         'Authorization': 'Bearer ' + str(access_token)
     }
-    response = requests.post(url=ApiEndpoints.logout_from_session(session_id), headers=header)
+    response = requests.post(url=logout_from_session(session_id), headers=header)
     return response
 
 
 # Put Methods
 @allure.step
-def add_profile_details(birth_date: str, iban: str, name: str, personal_num: str, user_type: str, access_token):
+def add_profile_details(birth_date, iban, name, personal_num, user_type, access_token):
     body = {
         "birthDate": birth_date,
         "iban": iban,
@@ -191,7 +194,7 @@ def add_profile_details(birth_date: str, iban: str, name: str, personal_num: str
         'Authorization': 'Bearer ' + str(access_token)
     }
 
-    response = requests.put(url=ApiEndpoints.put_profile_details, json=body, headers=header)
+    response = requests.put(url=put_profile_details, json=body, headers=header)
     return response
 
 
@@ -206,7 +209,7 @@ def profile_phone(user_sms_id: str, access_token):
         'Authorization': 'Bearer ' + str(access_token)
     }
 
-    response = requests.put(url=ApiEndpoints.profile_phone, json=body, headers=header)
+    response = requests.put(url=profile_phone, json=body, headers=header)
     return response
 
 
@@ -219,7 +222,7 @@ def soft_delete(access_token):
         'Authorization': 'Bearer ' + str(access_token)
     }
 
-    response = requests.delete(url=ApiEndpoints.delete_profile_soft_delete, headers=header)
+    response = requests.delete(url=delete_profile_soft_delete, headers=header)
     return response
 
 
@@ -231,5 +234,5 @@ def soft_delete_by_id(user_id: str, access_token):
         'Authorization': 'Bearer ' + str(access_token)
     }
 
-    response = requests.delete(url=ApiEndpoints.delete_profile_by_id(user_id), headers=header)
+    response = requests.delete(url=delete_profile_by_id(user_id), headers=header)
     return response
