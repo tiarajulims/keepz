@@ -294,6 +294,7 @@ class LoginPositive(unittest.TestCase):
             access_token = json_response.get("access_token")
             profile_res = get_method(access_token)
             profile = profile_res.json()
+            print(json_response)
             self.assertEquals(login_res.status_code, 200)
             self.assertIn("id", profile)
             self.assertIn("name", profile)

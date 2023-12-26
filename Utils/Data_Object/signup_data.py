@@ -26,5 +26,4 @@ class Sign_Up_Data:
         "userType": "INDIVIDUAL"
     }
 
-    sms_type_individual = "INDIVIDUAL"
-    sms_type_business = "BUSINESS"
+

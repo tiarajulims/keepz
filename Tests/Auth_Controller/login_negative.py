@@ -76,13 +76,13 @@ class LoginNegative(unittest.TestCase):
     def test_04_empty_devToken_login_bus(self):
         payload_sms = copy.copy(DataForLogin.payload_send_sms)
         payload_sms["phone"] = "599989981"
-        payload_sms["smsType"] = "BUSINESS"
         payload_verify = copy.copy(DataForLogin.payload_verify_sms)
         payload_verify["phone"] = "599989981"
         user_sms_id = send_and_verify(payload_sms, payload_verify)
         payload = copy.copy(DataForLogin.payload_login)
         payload["deviceToken"] = ""
         payload['mobileNumber'] = "996599989981"
+        payload["userType"] = "BUSINESS"
         payload["userSMSId"] = user_sms_id
         response = login(payload)
         json_response = response.json()
@@ -104,12 +104,14 @@ class LoginNegative(unittest.TestCase):
         payload = copy.copy(DataForLogin.payload_login)
         payload["deviceToken"] = None
         payload['mobileNumber'] = "996599989981"
+        payload["userType"] = "BUSINESS"
         payload["userSMSId"] = user_sms_id
         response = login(payload)
         json_response = response.json()
         self.assertEquals(response.status_code, 400)
         self.assertIn("message", json_response)
         self.assertIn(json_response["message"], "[deviceToken-Is required]")
+
 
     @allure.suite("Login - Negative")
     @allure.title("Login with space as deviceToken - Business")
@@ -124,6 +126,7 @@ class LoginNegative(unittest.TestCase):
         payload = copy.copy(DataForLogin.payload_login)
         payload["deviceToken"] = " "
         payload['mobileNumber'] = "996599989981"
+        payload["userType"] = "BUSINESS"
         payload["userSMSId"] = user_sms_id
         response = login(payload)
         json_response = response.json()
@@ -136,7 +139,6 @@ class LoginNegative(unittest.TestCase):
     @allure.title("Login with empty mobileName - Individual")
     @allure.description("Login with empty mobileName, other data is valid")
     @allure.severity(allure.severity_level.NORMAL)
-    # TODO assertions must be changed when https://makingscience.atlassian.net/browse/EX07198-738 will be fixed
     def test_07_empty_mobileName_login_ind(self):
         payload_sms = copy.copy(DataForLogin.payload_send_sms)
         payload_sms["phone"] = "599989981"
@@ -149,31 +151,31 @@ class LoginNegative(unittest.TestCase):
         payload["userSMSId"] = user_sms_id
         response = login(payload)
         json_response = response.json()
-        access_token = json_response.get("access_token")
-        self.assertEquals(response.status_code, 200)
-        return access_token
+        self.assertEquals(response.status_code, 400)
+        self.assertIn("message", json_response)
+        self.assertIn(json_response["message"], "[mobileName-Is required]")
+
 
     @allure.suite("Login - Negative")
     @allure.title("Login with empty mobileName - Business")
     @allure.description("Login with empty mobileName, other data is valid")
     @allure.severity(allure.severity_level.NORMAL)
-    # TODO assertions must be changed when https://makingscience.atlassian.net/browse/EX07198-738 will be fixed
     def test_08_empty_mobileName_login_bus(self):
         payload_sms = copy.copy(DataForLogin.payload_send_sms)
         payload_sms["phone"] = "599989981"
-        payload_sms["userType"] = "BUSINESS"
         payload_verify = copy.copy(DataForLogin.payload_verify_sms)
         payload_verify["phone"] = "599989981"
         user_sms_id = send_and_verify(payload_sms, payload_verify)
         payload = copy.copy(DataForLogin.payload_login)
         payload["mobileName"] = ""
+        payload["userType"] = "BUSINESS"
         payload['mobileNumber'] = "996599989981"
         payload["userSMSId"] = user_sms_id
         response = login(payload)
         json_response = response.json()
-        access_token = json_response.get("access_token")
-        self.assertEquals(response.status_code, 200)
-        return access_token
+        self.assertEquals(response.status_code, 400)
+        self.assertIn("message", json_response)
+        self.assertIn(json_response["message"], "[mobileName-Is required]")
 
 
     @allure.suite("Login - Negative")
@@ -203,13 +205,13 @@ class LoginNegative(unittest.TestCase):
     def test_10_None_mobileName_login_bus(self):
         payload_sms = copy.copy(DataForLogin.payload_send_sms)
         payload_sms["phone"] = "599989981"
-        payload_sms["userType"] = "BUSINESS"
         payload_verify = copy.copy(DataForLogin.payload_verify_sms)
         payload_verify["phone"] = "599989981"
         user_sms_id = send_and_verify(payload_sms, payload_verify)
         payload = copy.copy(DataForLogin.payload_login)
         payload["mobileName"] = None
         payload['mobileNumber'] = "996599989981"
+        payload["userType"] = "BUSINESS"
         payload["userSMSId"] = user_sms_id
         response = login(payload)
         json_response = response.json()
@@ -222,7 +224,6 @@ class LoginNegative(unittest.TestCase):
     @allure.title("Login with space mobileName - Individual")
     @allure.description("Login with space mobileName, other data is valid")
     @allure.severity(allure.severity_level.NORMAL)
-    # TODO assertions must be changed when https://makingscience.atlassian.net/browse/EX07198-738 will be fixed
     def test_11_space_mobileName_login_ind(self):
         payload_sms = copy.copy(DataForLogin.payload_send_sms)
         payload_sms["phone"] = "599989981"
@@ -235,28 +236,35 @@ class LoginNegative(unittest.TestCase):
         payload["userSMSId"] = user_sms_id
         response = login(payload)
         json_response = response.json()
-        self.assertEquals(response.status_code, 200)
+        self.assertEquals(response.status_code, 400)
+        self.assertIn("message", json_response)
+        self.assertIn(json_response["message"], "[mobileName-Is required]")
+
 
 
     @allure.suite("Login - Negative")
     @allure.title("Login with None mobileName - Business")
     @allure.description("Login with None mobileName, other data is valid")
     @allure.severity(allure.severity_level.NORMAL)
-    # TODO assertions must be changed when https://makingscience.atlassian.net/browse/EX07198-738 will be fixed
     def test_12_empty_mobileName_login_bus(self):
         payload_sms = copy.copy(DataForLogin.payload_send_sms)
         payload_sms["phone"] = "599989981"
-        payload_sms["userType"] = "BUSINESS"
         payload_verify = copy.copy(DataForLogin.payload_verify_sms)
         payload_verify["phone"] = "599989981"
         user_sms_id = send_and_verify(payload_sms, payload_verify)
         payload = copy.copy(DataForLogin.payload_login)
         payload["mobileName"] = " "
         payload['mobileNumber'] = "996599989981"
+        payload["userType"] = "BUSINESS"
         payload["userSMSId"] = user_sms_id
         response = login(payload)
         json_response = response.json()
-        self.assertEquals(response.status_code, 200)
+        self.assertEquals(response.status_code, 400)
+        self.assertIn("message", json_response)
+        self.assertIn(json_response["message"], "[mobileName-Is required]")
+
+
+
 
     @allure.suite("Login - Negative")
     @allure.title("Login with empty mobileOS - Individual")
@@ -288,13 +296,13 @@ class LoginNegative(unittest.TestCase):
     def test_14_empty_mobileOS_login_bus(self):
         payload_sms = copy.copy(DataForLogin.payload_send_sms)
         payload_sms["phone"] = "599989981"
-        payload_sms["userType"] = "BUSINESS"
         payload_verify = copy.copy(DataForLogin.payload_verify_sms)
         payload_verify["phone"] = "599989981"
         user_sms_id = send_and_verify(payload_sms, payload_verify)
         payload = copy.copy(DataForLogin.payload_login)
         payload["mobileOS"] = ""
         payload['mobileNumber'] = "996599989981"
+        payload["userType"] = "BUSINESS"
         payload["userSMSId"] = user_sms_id
         response = login(payload)
         json_response = response.json()
@@ -332,13 +340,13 @@ class LoginNegative(unittest.TestCase):
     def test_16_empty_mobileOS_login_bus(self):
         payload_sms = copy.copy(DataForLogin.payload_send_sms)
         payload_sms["phone"] = "599989981"
-        payload_sms["userType"] = "BUSINESS"
         payload_verify = copy.copy(DataForLogin.payload_verify_sms)
         payload_verify["phone"] = "599989981"
         user_sms_id = send_and_verify(payload_sms, payload_verify)
         payload = copy.copy(DataForLogin.payload_login)
         payload["mobileOS"] = None
         payload['mobileNumber'] = "996599989981"
+        payload["userType"] = "BUSINESS"
         payload["userSMSId"] = user_sms_id
         response = login(payload)
         json_response = response.json()
@@ -377,13 +385,13 @@ class LoginNegative(unittest.TestCase):
     def test_18_space_mobileOS_login_bus(self):
         payload_sms = copy.copy(DataForLogin.payload_send_sms)
         payload_sms["phone"] = "599989981"
-        payload_sms["userType"] = "BUSINESS"
         payload_verify = copy.copy(DataForLogin.payload_verify_sms)
         payload_verify["phone"] = "599989981"
         user_sms_id = send_and_verify(payload_sms, payload_verify)
         payload = copy.copy(DataForLogin.payload_login)
         payload["mobileOS"] = " "
         payload['mobileNumber'] = "996599989981"
+        payload["userType"] = "BUSINESS"
         payload["userSMSId"] = user_sms_id
         response = login(payload)
         json_response = response.json()
@@ -422,13 +430,13 @@ class LoginNegative(unittest.TestCase):
     def test_20_lowercase_mobileOS_login_bus(self):
         payload_sms = copy.copy(DataForLogin.payload_send_sms)
         payload_sms["phone"] = "599989981"
-        payload_sms["userType"] = "BUSINESS"
         payload_verify = copy.copy(DataForLogin.payload_verify_sms)
         payload_verify["phone"] = "599989981"
         user_sms_id = send_and_verify(payload_sms, payload_verify)
         payload = copy.copy(DataForLogin.payload_login)
         payload["mobileOS"] = "android"
         payload['mobileNumber'] = "996599989981"
+        payload["userType"] = "BUSINESS"
         payload["userSMSId"] = user_sms_id
         response = login(payload)
         json_response = response.json()
@@ -467,13 +475,13 @@ class LoginNegative(unittest.TestCase):
     def test_22_invalid_mobileOS_login_bus(self):
         payload_sms = copy.copy(DataForLogin.payload_send_sms)
         payload_sms["phone"] = "599989981"
-        payload_sms["userType"] = "BUSINESS"
         payload_verify = copy.copy(DataForLogin.payload_verify_sms)
         payload_verify["phone"] = "599989981"
         user_sms_id = send_and_verify(payload_sms, payload_verify)
         payload = copy.copy(DataForLogin.payload_login)
         payload["mobileOS"] = "Android"
         payload['mobileNumber'] = "996599989981"
+        payload["userType"] = "BUSINESS"
         payload["userSMSId"] = user_sms_id
         response = login(payload)
         json_response = response.json()
@@ -510,12 +518,12 @@ class LoginNegative(unittest.TestCase):
     def test_24_empty_userSMSId_login_bus(self):
         payload_sms = copy.copy(DataForLogin.payload_send_sms)
         payload_sms["phone"] = "599989981"
-        payload_sms["userType"] = "BUSINESS"
         payload_verify = copy.copy(DataForLogin.payload_verify_sms)
         payload_verify["phone"] = "599989981"
         payload = copy.copy(DataForLogin.payload_login)
         payload["userSMSId"] = ""
         payload['mobileNumber'] = "996599989981"
+        payload["userType"] = "BUSINESS"
         response = login(payload)
         json_response = response.json()
         self.assertEquals(response.status_code, 400)
@@ -552,12 +560,12 @@ class LoginNegative(unittest.TestCase):
     def test_26_None_userSMSId_login_bus(self):
         payload_sms = copy.copy(DataForLogin.payload_send_sms)
         payload_sms["phone"] = "599989981"
-        payload_sms["userType"] = "BUSINESS"
         payload_verify = copy.copy(DataForLogin.payload_verify_sms)
         payload_verify["phone"] = "599989981"
         payload = copy.copy(DataForLogin.payload_login)
         payload["userSMSId"] = None
         payload['mobileNumber'] = "996599989981"
+        payload["userType"] = "BUSINESS"
         response = login(payload)
         json_response = response.json()
         self.assertEquals(response.status_code, 400)
@@ -595,12 +603,12 @@ class LoginNegative(unittest.TestCase):
     def test_28_space_userSMSId_login_bus(self):
         payload_sms = copy.copy(DataForLogin.payload_send_sms)
         payload_sms["phone"] = "599989981"
-        payload_sms["userType"] = "BUSINESS"
         payload_verify = copy.copy(DataForLogin.payload_verify_sms)
         payload_verify["phone"] = "599989981"
         payload = copy.copy(DataForLogin.payload_login)
         payload["userSMSId"] = " "
         payload['mobileNumber'] = "996599989981"
+        payload["userType"] = "BUSINESS"
         response = login(payload)
         json_response = response.json()
         self.assertEquals(response.status_code, 400)
@@ -636,13 +644,13 @@ class LoginNegative(unittest.TestCase):
     def test_30_invalid_userSMSId_login_bus(self):
         payload_sms = copy.copy(DataForLogin.payload_send_sms)
         payload_sms["phone"] = "599989981"
-        payload_sms["userType"] = "BUSINESS"
         payload_verify = copy.copy(DataForLogin.payload_verify_sms)
         payload_verify["phone"] = "599989981"
         user_sms_id = send_and_verify(payload_sms, payload_verify)
         payload = copy.copy(DataForLogin.payload_login)
         payload["userSMSId"] = "invalid" + user_sms_id
         payload['mobileNumber'] = "996599989981"
+        payload["userType"] = "BUSINESS"
         response = login(payload)
         json_response = response.json()
         self.assertEquals(response.status_code, 404)
@@ -682,13 +690,13 @@ class LoginNegative(unittest.TestCase):
     def test_32_empty_userType_login_bus(self):
         payload_sms = copy.copy(DataForLogin.payload_send_sms)
         payload_sms["phone"] = "599989981"
-        payload_sms["userType"] = "BUSINESS"
         payload_verify = copy.copy(DataForLogin.payload_verify_sms)
         payload_verify["phone"] = "599989981"
         user_sms_id = send_and_verify(payload_sms, payload_verify)
         payload = copy.copy(DataForLogin.payload_login)
         payload["userSMSId"] = user_sms_id
         payload['mobileNumber'] = "996599989981"
+        payload["userType"] = "BUSINESS"
         payload["userType"] = ""
         response = login(payload)
         json_response = response.json()
@@ -728,13 +736,13 @@ class LoginNegative(unittest.TestCase):
     def test_34_invalid_userSMSId_login_bus(self):
         payload_sms = copy.copy(DataForLogin.payload_send_sms)
         payload_sms["phone"] = "599989981"
-        payload_sms["userType"] = "BUSINESS"
         payload_verify = copy.copy(DataForLogin.payload_verify_sms)
         payload_verify["phone"] = "599989981"
         user_sms_id = send_and_verify(payload_sms, payload_verify)
         payload = copy.copy(DataForLogin.payload_login)
         payload["userSMSId"] = user_sms_id
         payload['mobileNumber'] = "996599989981"
+        payload["userType"] = "BUSINESS"
         payload["userType"] = None
         response = login(payload)
         json_response = response.json()
@@ -774,13 +782,13 @@ class LoginNegative(unittest.TestCase):
     def test_36_space_userSMSId_login_bus(self):
         payload_sms = copy.copy(DataForLogin.payload_send_sms)
         payload_sms["phone"] = "599989981"
-        payload_sms["userType"] = "BUSINESS"
         payload_verify = copy.copy(DataForLogin.payload_verify_sms)
         payload_verify["phone"] = "599989981"
         user_sms_id = send_and_verify(payload_sms, payload_verify)
         payload = copy.copy(DataForLogin.payload_login)
         payload["userSMSId"] = user_sms_id
         payload['mobileNumber'] = "996599989981"
+        payload["userType"] = "BUSINESS"
         payload["userType"] = " "
         response = login(payload)
         json_response = response.json()
@@ -814,10 +822,9 @@ class LoginNegative(unittest.TestCase):
     @allure.title("Login with lowercase userType - Business")
     @allure.description("Login with lowercase userType, other data is valid")
     @allure.severity(allure.severity_level.NORMAL)
-    def test_38_lowercase_userSMSId_login_bus(self):
+    def test_38_lowercase_userType_login_bus(self):
         payload_sms = copy.copy(DataForLogin.payload_send_sms)
         payload_sms["phone"] = "599989981"
-        payload_sms["userType"] = "BUSINESS"
         payload_verify = copy.copy(DataForLogin.payload_verify_sms)
         payload_verify["phone"] = "599989981"
         user_sms_id = send_and_verify(payload_sms, payload_verify)
@@ -833,8 +840,249 @@ class LoginNegative(unittest.TestCase):
                                                 "must be one of this: INDIVIDUAL, BUSINESS")
 
 
+    @allure.suite("Login - Negative")
+    @allure.title("Login with empty mobileNumber - Individual")
+    @allure.description("Login with empty mobileNumber, other data is valid")
+    @allure.severity(allure.severity_level.NORMAL)
+    def test_39_empty_mobileNumber_login_ind(self):
+        payload_sms = copy.copy(DataForLogin.payload_send_sms)
+        payload_sms["phone"] = "599989981"
+        payload_verify = copy.copy(DataForLogin.payload_verify_sms)
+        payload_verify["phone"] = "599989981"
+        user_sms_id = send_and_verify(payload_sms, payload_verify)
+        payload = copy.copy(DataForLogin.payload_login)
+        payload["userSMSId"] = user_sms_id
+        payload['mobileNumber'] = ""
+        response = login(payload)
+        json_response = response.json()
+        self.assertEquals(response.status_code, 400)
+        self.assertIn("message", json_response)
+        self.assertIn(json_response["message"], ['[mobileNumber-Is required, must match "^\\d{12}$"]',
+                                                 '[must match "^\\d{12}$", mobileNumber-Is required]'])
 
 
-    # TODO   cases for  'mobileNumber'"
+
+    @allure.suite("Login - Negative")
+    @allure.title("Login with empty mobileNumber - Business")
+    @allure.description("Login with empty mobileNumber, other data is valid")
+    @allure.severity(allure.severity_level.NORMAL)
+    def test_39_empty_mobileNumber_login_bus(self):
+        payload_sms = copy.copy(DataForLogin.payload_send_sms)
+        payload_sms["phone"] = "599989981"
+        payload_verify = copy.copy(DataForLogin.payload_verify_sms)
+        payload_verify["phone"] = "599989981"
+        user_sms_id = send_and_verify(payload_sms, payload_verify)
+        payload = copy.copy(DataForLogin.payload_login)
+        payload["userSMSId"] = user_sms_id
+        payload['mobileNumber'] = ""
+        response = login(payload)
+        json_response = response.json()
+        self.assertEquals(response.status_code, 400)
+        self.assertIn("message", json_response)
+        self.assertIn(json_response["message"], ['[mobileNumber-Is required, must match "^\\d{12}$"]',
+                                                 '[must match "^\\d{12}$", mobileNumber-Is required]'])
+
+    @allure.suite("Login - Negative")
+    @allure.title("Login with space mobileNumber - Individual")
+    @allure.description("Login with space mobileNumber, other data is valid")
+    @allure.severity(allure.severity_level.NORMAL)
+    def test_40_space_mobileNumber_login_ind(self):
+        payload_sms = copy.copy(DataForLogin.payload_send_sms)
+        payload_sms["phone"] = "599989981"
+        payload_verify = copy.copy(DataForLogin.payload_verify_sms)
+        payload_verify["phone"] = "599989981"
+        user_sms_id = send_and_verify(payload_sms, payload_verify)
+        payload = copy.copy(DataForLogin.payload_login)
+        payload["userSMSId"] = user_sms_id
+        payload['mobileNumber'] = " "
+        response = login(payload)
+        json_response = response.json()
+        self.assertEquals(response.status_code, 400)
+        self.assertIn("message", json_response)
+        self.assertIn(json_response["message"], ['[mobileNumber-Is required, must match "^\\d{12}$"]',
+                                                 '[must match "^\\d{12}$", mobileNumber-Is required]'])
+
+    @allure.suite("Login - Negative")
+    @allure.title("Login with space mobileNumber - Business")
+    @allure.description("Login with space mobileNumber, other data is valid")
+    @allure.severity(allure.severity_level.NORMAL)
+    def test_41_space_mobileNumber_login_bus(self):
+        payload_sms = copy.copy(DataForLogin.payload_send_sms)
+        payload_sms["phone"] = "599989981"
+        payload_verify = copy.copy(DataForLogin.payload_verify_sms)
+        payload_verify["phone"] = "599989981"
+        user_sms_id = send_and_verify(payload_sms, payload_verify)
+        payload = copy.copy(DataForLogin.payload_login)
+        payload["userSMSId"] = user_sms_id
+        payload['mobileNumber'] = " "
+        payload["userType"] = "BUSINESS"
+        response = login(payload)
+        json_response = response.json()
+        self.assertEquals(response.status_code, 400)
+        self.assertIn("message", json_response)
+        self.assertIn(json_response["message"], ['[mobileNumber-Is required, must match "^\\d{12}$"]',
+                                                 '[must match "^\\d{12}$", mobileNumber-Is required]'])
+
+    @allure.suite("Login - Negative")
+    @allure.title("Login with None mobileNumber - Individual")
+    @allure.description("Login with None mobileNumber, other data is valid")
+    @allure.severity(allure.severity_level.NORMAL)
+    def test_42_None_mobileNumber_login_ind(self):
+        payload_sms = copy.copy(DataForLogin.payload_send_sms)
+        payload_sms["phone"] = "599989981"
+        payload_verify = copy.copy(DataForLogin.payload_verify_sms)
+        payload_verify["phone"] = "599989981"
+        user_sms_id = send_and_verify(payload_sms, payload_verify)
+        payload = copy.copy(DataForLogin.payload_login)
+        payload["userSMSId"] = user_sms_id
+        payload['mobileNumber'] = None
+        response = login(payload)
+        json_response = response.json()
+        self.assertEquals(response.status_code, 400)
+        self.assertIn("message", json_response)
+        self.assertIn(json_response["message"], "[mobileNumber-Is required]")
+
+
+
+    @allure.suite("Login - Negative")
+    @allure.title("Login with None mobileNumber - Business")
+    @allure.description("Login with None mobileNumber, other data is valid")
+    @allure.severity(allure.severity_level.NORMAL)
+    def test_43_None_mobileNumber_login_bus(self):
+        payload_sms = copy.copy(DataForLogin.payload_send_sms)
+        payload_sms["phone"] = "599989981"
+        payload_verify = copy.copy(DataForLogin.payload_verify_sms)
+        payload_verify["phone"] = "599989981"
+        user_sms_id = send_and_verify(payload_sms, payload_verify)
+        payload = copy.copy(DataForLogin.payload_login)
+        payload["userSMSId"] = user_sms_id
+        payload['mobileNumber'] = None
+        payload["userType"] = "BUSINESS"
+        response = login(payload)
+        json_response = response.json()
+        self.assertEquals(response.status_code, 400)
+        self.assertIn("message", json_response)
+        self.assertIn(json_response["message"], "[mobileNumber-Is required]")
+
+    @allure.suite("Login - Negative")
+    @allure.title("Login with text mobileNumber - Individual")
+    @allure.description("Login with tet mobileNumber, other data is valid")
+    @allure.severity(allure.severity_level.NORMAL)
+    def test_44_text_mobileNumber_login_ind(self):
+        payload_sms = copy.copy(DataForLogin.payload_send_sms)
+        payload_sms["phone"] = "599989981"
+        payload_verify = copy.copy(DataForLogin.payload_verify_sms)
+        payload_verify["phone"] = "599989981"
+        user_sms_id = send_and_verify(payload_sms, payload_verify)
+        payload = copy.copy(DataForLogin.payload_login)
+        payload["userSMSId"] = user_sms_id
+        payload['mobileNumber'] = "string"
+        response = login(payload)
+        json_response = response.json()
+        self.assertEquals(response.status_code, 400)
+        self.assertIn("message", json_response)
+        self.assertIn(json_response["message"], '[must match "^\\d{12}$"]')
+
+    @allure.suite("Login - Negative")
+    @allure.title("Login with text mobileNumber - Business")
+    @allure.description("Login with text mobileNumber, other data is valid")
+    @allure.severity(allure.severity_level.NORMAL)
+    def test_45_text_mobileNumber_login_bus(self):
+        payload_sms = copy.copy(DataForLogin.payload_send_sms)
+        payload_sms["phone"] = "599989981"
+        payload_verify = copy.copy(DataForLogin.payload_verify_sms)
+        payload_verify["phone"] = "599989981"
+        user_sms_id = send_and_verify(payload_sms, payload_verify)
+        payload = copy.copy(DataForLogin.payload_login)
+        payload["userSMSId"] = user_sms_id
+        payload['mobileNumber'] = "string"
+        payload["userType"] = "BUSINESS"
+        response = login(payload)
+        json_response = response.json()
+        self.assertEquals(response.status_code, 400)
+        self.assertIn("message", json_response)
+        self.assertIn(json_response["message"], '[must match "^\\d{12}$"]')
+
+
+
+    @allure.suite("Login - Negative")
+    @allure.title("Login witt long mobileNumber - Individual")
+    @allure.description("Login with long mobileNumber, other data is valid")
+    @allure.severity(allure.severity_level.NORMAL)
+    def test_46_long_mobileNumber_login_ind(self):
+        payload_sms = copy.copy(DataForLogin.payload_send_sms)
+        payload_sms["phone"] = "599989981"
+        payload_verify = copy.copy(DataForLogin.payload_verify_sms)
+        payload_verify["phone"] = "599989981"
+        user_sms_id = send_and_verify(payload_sms, payload_verify)
+        payload = copy.copy(DataForLogin.payload_login)
+        payload["userSMSId"] = user_sms_id
+        payload['mobileNumber'] = "5999899811231"
+        response = login(payload)
+        json_response = response.json()
+        self.assertEquals(response.status_code, 400)
+        self.assertIn("message", json_response)
+        self.assertIn(json_response["message"], '[must match "^\\d{12}$"]')
+
+    @allure.suite("Login - Negative")
+    @allure.title("Login witt long mobileNumber - Business")
+    @allure.description("Login with long mobileNumber, other data is valid")
+    @allure.severity(allure.severity_level.NORMAL)
+    def test_47_long_mobileNumber_login_bus(self):
+        payload_sms = copy.copy(DataForLogin.payload_send_sms)
+        payload_sms["phone"] = "599989981"
+        payload_verify = copy.copy(DataForLogin.payload_verify_sms)
+        payload_verify["phone"] = "599989981"
+        user_sms_id = send_and_verify(payload_sms, payload_verify)
+        payload = copy.copy(DataForLogin.payload_login)
+        payload["userSMSId"] = user_sms_id
+        payload['mobileNumber'] = "5999899811231"
+        payload["userType"] = "BUSINESS"
+        response = login(payload)
+        json_response = response.json()
+        self.assertEquals(response.status_code, 400)
+        self.assertIn("message", json_response)
+        self.assertIn(json_response["message"], '[must match "^\\d{12}$"]')
+
+    @allure.suite("Login - Negative")
+    @allure.title("Login witt long mobileNumber - Individual")
+    @allure.description("Login with long mobileNumber, other data is valid")
+    @allure.severity(allure.severity_level.NORMAL)
+    def test_48_short_mobileNumber_login_ind(self):
+        payload_sms = copy.copy(DataForLogin.payload_send_sms)
+        payload_sms["phone"] = "599989981"
+        payload_verify = copy.copy(DataForLogin.payload_verify_sms)
+        payload_verify["phone"] = "599989981"
+        user_sms_id = send_and_verify(payload_sms, payload_verify)
+        payload = copy.copy(DataForLogin.payload_login)
+        payload["userSMSId"] = user_sms_id
+        payload['mobileNumber'] = "5999899"
+        response = login(payload)
+        json_response = response.json()
+        print(json_response)
+        self.assertEquals(response.status_code, 400)
+        self.assertIn("message", json_response)
+        self.assertIn(json_response["message"], '[must match "^\\d{12}$"]')
+
+    @allure.suite("Login - Negative")
+    @allure.title("Login witt short mobileNumber - Business")
+    @allure.description("Login with short mobileNumber, other data is valid")
+    @allure.severity(allure.severity_level.NORMAL)
+    def test_49_short_mobileNumber_login_bus(self):
+        payload_sms = copy.copy(DataForLogin.payload_send_sms)
+        payload_sms["phone"] = "599989981"
+        payload_verify = copy.copy(DataForLogin.payload_verify_sms)
+        payload_verify["phone"] = "599989981"
+        user_sms_id = send_and_verify(payload_sms, payload_verify)
+        payload = copy.copy(DataForLogin.payload_login)
+        payload["userSMSId"] = user_sms_id
+        payload['mobileNumber'] = "59998998"
+        payload["userType"] = "BUSINESS"
+        response = login(payload)
+        json_response = response.json()
+        self.assertEquals(response.status_code, 400)
+        self.assertIn("message", json_response)
+        self.assertIn(json_response["message"], '[must match "^\\d{12}$"]')
+
 
 
