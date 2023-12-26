@@ -31,11 +31,11 @@ class SendVerifyNegative(unittest.TestCase):
                                               "",
                                               Utils.Data_Object.login_data.DataForLogin.individual_send_sms)
         print(Utils.Data_Object.login_data.DataForLogin.individual_send_sms)
-        sendSms = response.json()
-        print(sendSms)
+        sendsms = response.json()
+        print(sendsms)
         self.assertEquals(response.status_code, 400)
-        self.assertIn("message", sendSms)
-        self.assertIn(sendSms["message"],
+        self.assertIn("message", sendsms)
+        self.assertIn(sendsms["message"],
                       ["[Invalid format of phone, must not be blank]",
                        "[must not be blank, Invalid format of phone]"])
 
@@ -51,10 +51,10 @@ class SendVerifyNegative(unittest.TestCase):
                                               .login_data
                                               .DataForLogin
                                               .business_sens_sms)
-        sendSms = response.json()
+        sendsms = response.json()
         self.assertEquals(response.status_code, 400)
-        self.assertIn("message", sendSms)
-        self.assertIn(sendSms["message"],
+        self.assertIn("message", sendsms)
+        self.assertIn(sendsms["message"],
                       ["[Invalid format of phone, must not be blank]",
                        "[must not be blank, Invalid format of phone]"])
 
@@ -67,10 +67,10 @@ class SendVerifyNegative(unittest.TestCase):
                                               "string",
                                               "",
                                               Utils.Data_Object.login_data.DataForLogin.registration_send_sms)
-        sendSms = response.json()
+        sendsms = response.json()
         self.assertEquals(response.status_code, 400)
-        self.assertIn("message", sendSms)
-        self.assertIn(sendSms["message"],
+        self.assertIn("message", sendsms)
+        self.assertIn(sendsms["message"],
                       ["[Invalid format of phone, must not be blank]",
                        "[must not be blank, Invalid format of phone]"])
 
@@ -83,10 +83,10 @@ class SendVerifyNegative(unittest.TestCase):
                                               "string",
                                               "599989981",
                                               Utils.Data_Object.login_data.DataForLogin.individual_send_sms)
-        sendSms = response.json()
+        sendsms = response.json()
         self.assertEquals(response.status_code, 400)
-        self.assertIn("message", sendSms)
-        self.assertIn(sendSms["message"], ["[Invalid Country Code]"])
+        self.assertIn("message", sendsms)
+        self.assertIn(sendsms["message"], ["[Invalid Country Code]"])
 
     @allure.suite(send_sms_login_business)
     @allure.title("Login with empty country code")
@@ -97,10 +97,10 @@ class SendVerifyNegative(unittest.TestCase):
                                               "string",
                                               "599989981",
                                               Utils.Data_Object.login_data.DataForLogin.business_sens_sms)
-        sendSms = response.json()
+        sendsms = response.json()
         self.assertEquals(response.status_code, 400)
-        self.assertIn("message", sendSms)
-        self.assertIn(sendSms["message"], ["[Invalid Country Code]"])
+        self.assertIn("message", sendsms)
+        self.assertIn(sendsms["message"], ["[Invalid Country Code]"])
 
     @allure.suite(registration_send_sms)
     @allure.title("Registration with empty country code")
@@ -111,10 +111,10 @@ class SendVerifyNegative(unittest.TestCase):
                                               "string",
                                               "599989981",
                                               Utils.Data_Object.login_data.DataForLogin.registration_send_sms)
-        sendSms = response.json()
+        sendsms = response.json()
         self.assertEquals(response.status_code, 400)
-        self.assertIn("message", sendSms)
-        self.assertIn(sendSms["message"], ["[Invalid Country Code]"])
+        self.assertIn("message", sendsms)
+        self.assertIn(sendsms["message"], ["[Invalid Country Code]"])
 
     @allure.suite(send_sms_login_individual)
     @allure.title("Login with string phone")
@@ -125,10 +125,10 @@ class SendVerifyNegative(unittest.TestCase):
                                               "string",
                                               "string",
                                               Utils.Data_Object.login_data.DataForLogin.individual_send_sms)
-        sendSms = response.json()
+        sendsms = response.json()
         self.assertEquals(response.status_code, 400)
-        self.assertIn("message", sendSms)
-        self.assertIn(sendSms["message"], ["[Invalid format of phone]"])
+        self.assertIn("message", sendsms)
+        self.assertIn(sendsms["message"], ["[Invalid format of phone]"])
 
     @allure.suite(send_sms_login_business)
     @allure.title("Login with string phone")
@@ -139,10 +139,10 @@ class SendVerifyNegative(unittest.TestCase):
                                               "string",
                                               "string",
                                               Utils.Data_Object.login_data.DataForLogin.business_sens_sms)
-        sendSms = response.json()
+        sendsms = response.json()
         self.assertEquals(response.status_code, 400)
-        self.assertIn("message", sendSms)
-        self.assertIn(sendSms["message"], ["[Invalid format of phone]"])
+        self.assertIn("message", sendsms)
+        self.assertIn(sendsms["message"], ["[Invalid format of phone]"])
 
     @allure.suite(registration_send_sms)
     @allure.title("Registration string as a number")
@@ -153,10 +153,10 @@ class SendVerifyNegative(unittest.TestCase):
                                               "string",
                                               "string",
                                               Utils.Data_Object.login_data.DataForLogin.registration_send_sms)
-        sendSms = response.json()
+        sendsms = response.json()
         self.assertEquals(response.status_code, 400)
-        self.assertIn("message", sendSms)
-        self.assertIn(sendSms["message"], ["[Invalid format of phone]"])
+        self.assertIn("message", sendsms)
+        self.assertIn(sendsms["message"], ["[Invalid format of phone]"])
 
     @allure.suite(send_sms_login_individual)
     @allure.title("Login with invalid phone")
@@ -167,10 +167,10 @@ class SendVerifyNegative(unittest.TestCase):
                                               "string",
                                               "821989981",
                                               Utils.Data_Object.login_data.DataForLogin.individual_send_sms)
-        sendSms = response.json()
+        sendsms = response.json()
         self.assertEquals(response.status_code, 404)
-        self.assertIn("message", sendSms)
-        self.assertIn(sendSms["message"],
+        self.assertIn("message", sendsms)
+        self.assertIn(sendsms["message"],
                       ['404 NOT_FOUND "Individual user does not exist for mobile number: 996821989981"'])
 
     @allure.suite(send_sms_login_business)
@@ -182,10 +182,10 @@ class SendVerifyNegative(unittest.TestCase):
                                               "string",
                                               "821989981",
                                               Utils.Data_Object.login_data.DataForLogin.business_sens_sms)
-        sendSms = response.json()
+        sendsms = response.json()
         self.assertEquals(response.status_code, 404)
-        self.assertIn("message", sendSms)
-        self.assertIn(sendSms["message"],
+        self.assertIn("message", sendsms)
+        self.assertIn(sendsms["message"],
                       ['404 NOT_FOUND "Business user does not exist for mobile number: 996821989981"'])
 
     @allure.suite(registration_send_sms)
@@ -197,10 +197,10 @@ class SendVerifyNegative(unittest.TestCase):
                                               "string",
                                               "ass821989981",
                                               Utils.Data_Object.login_data.DataForLogin.registration_send_sms)
-        sendSms = response.json()
+        sendsms = response.json()
         self.assertEquals(response.status_code, 400)
-        self.assertIn("message", sendSms)
-        self.assertIn(sendSms["message"],
+        self.assertIn("message", sendsms)
+        self.assertIn(sendsms["message"],
                       ["[Invalid format of phone]"])
 
     @allure.suite("Login Functionality")
@@ -212,10 +212,10 @@ class SendVerifyNegative(unittest.TestCase):
                                               "string",
                                               "599989981",
                                               "")
-        sendSms = response.json()
+        sendsms = response.json()
         self.assertEquals(response.status_code, 400)
-        self.assertIn("message", sendSms)
-        self.assertIn(sendSms["message"], [" can't be parsed to SMSType.SMSType must be one of this: REGISTRATION, "
+        self.assertIn("message", sendsms)
+        self.assertIn(sendsms["message"], [" can't be parsed to SMSType.SMSType must be one of this: REGISTRATION, "
                                            "LOGIN_AS_INDIVIDUAL, LOGIN_AS_BUSINESS, PASSWORD_RESET, PHONE_CHANGE"])
 
     @allure.suite(verify_sms_login_individual)
@@ -230,10 +230,10 @@ class SendVerifyNegative(unittest.TestCase):
         response = Utils.commonSteps.verify_otp_sms("",
                                                     "996",
                                                     "599989981")
-        sendSms = response.json()
+        sendsms = response.json()
         self.assertEquals(response.status_code, 400)
-        self.assertIn("message", sendSms)
-        self.assertIn(sendSms["message"], '[must not be blank]')
+        self.assertIn("message", sendsms)
+        self.assertIn(sendsms["message"], '[must not be blank]')
 
     @allure.suite(verify_sms_login_business)
     @allure.title("Login with empty OTP")
@@ -247,10 +247,10 @@ class SendVerifyNegative(unittest.TestCase):
         response = Utils.commonSteps.verify_otp_sms("",
                                                     "996",
                                                     "599989981")
-        sendSms = response.json()
+        sendsms = response.json()
         self.assertEquals(response.status_code, 400)
-        self.assertIn("message", sendSms)
-        self.assertIn(sendSms["message"], '[must not be blank]')
+        self.assertIn("message", sendsms)
+        self.assertIn(sendsms["message"], '[must not be blank]')
 
     @allure.suite(verify_sms_registration)
     @allure.title("Register with empty OTP")
@@ -264,10 +264,10 @@ class SendVerifyNegative(unittest.TestCase):
         response = Utils.commonSteps.verify_otp_sms("",
                                                     "996",
                                                     "599989981")
-        sendSms = response.json()
+        sendsms = response.json()
         self.assertEquals(response.status_code, 400)
-        self.assertIn("message", sendSms)
-        self.assertIn(sendSms["message"], '[must not be blank]')
+        self.assertIn("message", sendsms)
+        self.assertIn(sendsms["message"], '[must not be blank]')
 
     @allure.suite(verify_sms_login_individual)
     @allure.title("Login with wrong OTP")
@@ -281,10 +281,10 @@ class SendVerifyNegative(unittest.TestCase):
         response = Utils.commonSteps.verify_otp_sms("654221",
                                                     "996",
                                                     "599989981")
-        sendSms = response.json()
+        sendsms = response.json()
         self.assertEquals(response.status_code, 406)
-        self.assertIn("message", sendSms)
-        self.assertIn(sendSms["message"], '"406 NOT_ACCEPTABLE "Invalid SMS Code"')
+        self.assertIn("message", sendsms)
+        self.assertIn(sendsms["message"], '"406 NOT_ACCEPTABLE "Invalid SMS Code"')
 
     @allure.suite(verify_sms_login_business)
     @allure.title("Login with wrong OTP")
@@ -298,10 +298,10 @@ class SendVerifyNegative(unittest.TestCase):
         response = Utils.commonSteps.verify_otp_sms("654221",
                                                     "996",
                                                     "599989981")
-        sendSms = response.json()
+        sendsms = response.json()
         self.assertEquals(response.status_code, 406)
-        self.assertIn("message", sendSms)
-        self.assertIn(sendSms["message"], '"406 NOT_ACCEPTABLE "Invalid SMS Code"')
+        self.assertIn("message", sendsms)
+        self.assertIn(sendsms["message"], '"406 NOT_ACCEPTABLE "Invalid SMS Code"')
 
     @allure.suite(verify_sms_registration)
     @allure.title("Register with wrong OTP")
@@ -315,11 +315,11 @@ class SendVerifyNegative(unittest.TestCase):
         response = Utils.commonSteps.verify_otp_sms("654221",
                                                     "996",
                                                     "599989981")
-        sendSms = response.json()
-        print(sendSms)
+        sendsms = response.json()
+        print(sendsms)
         self.assertEquals(response.status_code, 406)
-        self.assertIn("message", sendSms)
-        self.assertIn(sendSms["message"], '"406 NOT_ACCEPTABLE "Invalid SMS Code"')
+        self.assertIn("message", sendsms)
+        self.assertIn(sendsms["message"], '"406 NOT_ACCEPTABLE "Invalid SMS Code"')
 
     @allure.suite(verify_sms_login_individual)
     @allure.title("Login with wrong OTP")
@@ -333,11 +333,11 @@ class SendVerifyNegative(unittest.TestCase):
         response = Utils.commonSteps.verify_otp_sms("123456",
                                                     "997",
                                                     "599989981")
-        sendSms = response.json()
-        print(sendSms)
+        sendsms = response.json()
+        print(sendsms)
         self.assertEquals(response.status_code, 428)
-        self.assertIn("message", sendSms)
-        self.assertIn(sendSms["message"], '428 PRECONDITION_REQUIRED "SMS not send on phone 997599989981 "')
+        self.assertIn("message", sendsms)
+        self.assertIn(sendsms["message"], '428 PRECONDITION_REQUIRED "SMS not send on phone 997599989981 "')
 
     @allure.suite(verify_sms_login_business)
     @allure.title("Login with wrong Country Code ")
@@ -351,11 +351,11 @@ class SendVerifyNegative(unittest.TestCase):
         response = Utils.commonSteps.verify_otp_sms("123456",
                                                     "997",
                                                     "599989981")
-        sendSms = response.json()
-        print(sendSms)
+        sendsms = response.json()
+        print(sendsms)
         self.assertEquals(response.status_code, 428)
-        self.assertIn("message", sendSms)
-        self.assertIn(sendSms["message"], '428 PRECONDITION_REQUIRED "SMS not send on phone 997599989981 "')
+        self.assertIn("message", sendsms)
+        self.assertIn(sendsms["message"], '428 PRECONDITION_REQUIRED "SMS not send on phone 997599989981 "')
 
     @allure.suite(registration_send_sms)
     @allure.title("Register with wrong OTP")
@@ -369,11 +369,11 @@ class SendVerifyNegative(unittest.TestCase):
         response = Utils.commonSteps.verify_otp_sms("123456",
                                                     "997",
                                                     "599989981")
-        sendSms = response.json()
-        print(sendSms)
+        sendsms = response.json()
+        print(sendsms)
         self.assertEquals(response.status_code, 428)
-        self.assertIn("message", sendSms)
-        self.assertIn(sendSms["message"], '428 PRECONDITION_REQUIRED "SMS not send on phone 997599989981 "')
+        self.assertIn("message", sendsms)
+        self.assertIn(sendsms["message"], '428 PRECONDITION_REQUIRED "SMS not send on phone 997599989981 "')
 
     @allure.suite(verify_sms_login_individual)
     @allure.title("login with empty number")
@@ -387,10 +387,10 @@ class SendVerifyNegative(unittest.TestCase):
         response = Utils.commonSteps.verify_otp_sms("123456",
                                                     "996",
                                                     "")
-        sendSms = response.json()
+        sendsms = response.json()
         self.assertEquals(response.status_code, 400)
-        self.assertIn("message", sendSms)
-        self.assertIn(sendSms["message"], "[must not be blank]")
+        self.assertIn("message", sendsms)
+        self.assertIn(sendsms["message"], "[must not be blank]")
 
     @allure.suite(verify_sms_login_business)
     @allure.title("login with empty number")
@@ -404,10 +404,10 @@ class SendVerifyNegative(unittest.TestCase):
         response = Utils.commonSteps.verify_otp_sms("123456",
                                                     "996",
                                                     "")
-        sendSms = response.json()
+        sendsms = response.json()
         self.assertEquals(response.status_code, 400)
-        self.assertIn("message", sendSms)
-        self.assertIn(sendSms["message"], "[must not be blank]")
+        self.assertIn("message", sendsms)
+        self.assertIn(sendsms["message"], "[must not be blank]")
 
     @allure.suite(verify_sms_registration)
     @allure.title("Register with empty number")
@@ -421,10 +421,10 @@ class SendVerifyNegative(unittest.TestCase):
         response = Utils.commonSteps.verify_otp_sms("123456",
                                                     "996",
                                                     "")
-        sendSms = response.json()
+        sendsms = response.json()
         self.assertEquals(response.status_code, 400)
-        self.assertIn("message", sendSms)
-        self.assertIn(sendSms["message"], "[must not be blank]")
+        self.assertIn("message", sendsms)
+        self.assertIn(sendsms["message"], "[must not be blank]")
 
     @allure.suite(verify_sms_login_individual)
     @allure.title("login with wrong number")
@@ -438,10 +438,10 @@ class SendVerifyNegative(unittest.TestCase):
         response = Utils.commonSteps.verify_otp_sms("123456",
                                                     "996",
                                                     "499989981")
-        sendSms = response.json()
+        sendsms = response.json()
         self.assertEquals(response.status_code, 428)
-        self.assertIn("message", sendSms)
-        self.assertIn(sendSms["message"], '428 PRECONDITION_REQUIRED "SMS not send on phone 996499989981 "')
+        self.assertIn("message", sendsms)
+        self.assertIn(sendsms["message"], '428 PRECONDITION_REQUIRED "SMS not send on phone 996499989981 "')
 
     @allure.suite(verify_sms_login_individual)
     @allure.title("login with wrong number")
@@ -455,10 +455,10 @@ class SendVerifyNegative(unittest.TestCase):
         response = Utils.commonSteps.verify_otp_sms("123456",
                                                     "996",
                                                     "499989981")
-        sendSms = response.json()
+        sendsms = response.json()
         self.assertEquals(response.status_code, 428)
-        self.assertIn("message", sendSms)
-        self.assertIn(sendSms["message"], '428 PRECONDITION_REQUIRED "SMS not send on phone 996499989981 "')
+        self.assertIn("message", sendsms)
+        self.assertIn(sendsms["message"], '428 PRECONDITION_REQUIRED "SMS not send on phone 996499989981 "')
 
     @allure.suite(verify_sms_registration)
     @allure.title("Registration with wrong number")
@@ -472,10 +472,10 @@ class SendVerifyNegative(unittest.TestCase):
         response = Utils.commonSteps.verify_otp_sms("123456",
                                                     "996",
                                                     "499989981")
-        sendSms = response.json()
+        sendsms = response.json()
         self.assertEquals(response.status_code, 428)
-        self.assertIn("message", sendSms)
-        self.assertIn(sendSms["message"], '428 PRECONDITION_REQUIRED "SMS not send on phone 996499989981 "')
+        self.assertIn("message", sendsms)
+        self.assertIn(sendsms["message"], '428 PRECONDITION_REQUIRED "SMS not send on phone 996499989981 "')
 
     @allure.suite("Login Functionality - Check")
     @allure.title("login  with empty phone for check")
@@ -483,12 +483,12 @@ class SendVerifyNegative(unittest.TestCase):
     @allure.severity(allure.severity_level.NORMAL)
     def test_29_check_with_empty_phone(self):
         response = Utils.commonSteps.check_user("")
-        sendSms = response.json()
+        sendsms = response.json()
         self.assertEquals(response.status_code, 200)
-        self.assertIn("individualExists", sendSms)
-        self.assertIn("businessExists", sendSms)
-        self.assertIn(str(sendSms["individualExists"]), "False")
-        self.assertIn(str(sendSms["businessExists"]), "False")
+        self.assertIn("individualExists", sendsms)
+        self.assertIn("businessExists", sendsms)
+        self.assertIn(str(sendsms["individualExists"]), "False")
+        self.assertIn(str(sendsms["businessExists"]), "False")
 
     @allure.suite(send_sms_login_business)
     @allure.title("Login with empty phone")
@@ -502,9 +502,9 @@ class SendVerifyNegative(unittest.TestCase):
                                               .login_data
                                               .DataForLogin
                                               .registration_send_sms)
-        sendSms = response.json()
+        sendsms = response.json()
         print(response.text)
         self.assertEquals(response.status_code, 409)
-        self.assertIn("message", sendSms)
-        self.assertIn(sendSms["message"],
+        self.assertIn("message", sendsms)
+        self.assertIn(sendsms["message"],
                       ['409 CONFLICT "Individual or Business user already exists for mobile number: 996599989981"'])
