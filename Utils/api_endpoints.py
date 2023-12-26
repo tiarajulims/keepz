@@ -30,7 +30,11 @@ class ApiEndpoints:
 
     # Post Endpoints
 
+<<<<<<< Updated upstream
     complete_or_update_user = base_url + "api/v1/profile/admin"
+=======
+complete_or_update_user = base_url + "/api/v1/profile/admin"
+>>>>>>> Stashed changes
 
     empty_user = base_url + "/api/v1/profile/bulk/create"
 
@@ -47,7 +51,11 @@ class ApiEndpoints:
 
     # Put Endpoints
 
+<<<<<<< Updated upstream
     put_profile_details = base_url + "/api/v1/profile/details"
+=======
+put_profile_details = base_url + "/api/v1/profile/details"
+>>>>>>> Stashed changes
 
     profile_phone = base_url + "/api/v1/profile/phone"
 
